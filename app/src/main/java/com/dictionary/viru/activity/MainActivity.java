@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
         InitData();
     }
 
@@ -300,8 +299,9 @@ public class MainActivity extends AppCompatActivity
         builder.setCancelable(false);
         builder.show();
     }
+
     public void onEvent(ChangeMenuEvent event) {
-      if (event.type == Configruation.HOME_SEARCH_WORD) {
+        if (event.type == Configruation.HOME_SEARCH_WORD) {
             changeFragment(new HomeFragment());
             mCurrentPage = Configruation.HOME_SEARCH_WORD;
             if (event.isClickFloat) {

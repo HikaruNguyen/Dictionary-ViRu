@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00539F</color>
-    <color name="colorPrimaryDark">#014c8e</color>
-    <color name="colorAccent">#E03A3E</color>
-    <color name="colorToobar">#00539F</color>
+    <color name="colorPrimary">#0039A6</color>
+    <color name="colorPrimaryDark">#003291</color>
+    <color name="colorAccent">#D52B1E</color>
+    <color name="colorToobar">#0039A6</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="bg_gray">#F7F7F7</color>
