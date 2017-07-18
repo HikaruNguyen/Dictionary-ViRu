@@ -6,6 +6,3 @@
 .DS_Store
 /build
 /captures
-/standOut
-/app/src/main/assets
-/gradle

@@ -1,0 +1,136 @@
+/*=================== COMMONS ===============*/
+/*
+@font-face { 
+    font-family: 'DejaVuSans';
+    src: url('file:///android_asset/fonts/DejaVuSans.ttf');
+}
+*/
+@font-face {
+    font-family: "Roboto";
+    src: url("file:///android_asset/fonts/Roboto-Regular.ttf");
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("file:///android_asset/fonts/Roboto-Bold.ttf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("file:///android_asset/fonts/Roboto-Italic.ttf");
+    font-style: italic;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("file:///android_asset/fonts/Roboto-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+}
+
+* {
+	margin: 0;
+	padding: 0;	
+}
+
+ul {
+	margin-left: 1em;
+}
+
+blockquote {
+	margin-left: 0.5em;
+}
+
+body {
+	font-family: 'Roboto';
+}
+
+
+/*=================== BLOCKS ===============*/
+.dictionaryBlock {
+	padding: 0.3em;
+	margin: 0.3em 0.2em 0.3em 0.2em;
+	border: 0.3em solid #59922B;
+	border-radius: 0.8em;
+	font-size: 1em;
+	word-wrap: break-word;
+	background-color: #fff; /* white */
+}
+
+.welcomeBlock {
+	padding: 0.5em;
+	font-size: 1em;
+	word-wrap: break-word;
+	color: green;
+}
+
+/*=================== OTHERS ===============*/
+.searchedWord {
+	padding: 0.4em 0.6em 0.7em 0.6em;
+	/*background: url(file:///android_asset/images/wordbg.png) bottom left repeat-x;*/	
+	border-radius: 0.5em;
+	color: #fff; /* white */
+	font-weight: bold;
+	font-size: 110%;
+	background-color: #59922B;		
+}
+
+.dictionaryContent {
+	padding: 0.4em;
+	line-height: 1.4;
+}
+
+.dictionaryContentFailure {
+	padding: 0.4em 0.4em 0.3em 0.4em;
+	line-height: 1.4;
+	color: red;
+}
+
+.dictionaryNameTop {
+	padding-bottom: 0.3em;
+	margin-bottom:0.25em;
+	font-size: 0.9em;
+	border-bottom: 0.2em solid #59922B;	
+	text-align: right;
+	font-weight: bold;
+	color: #8b8682; /* seashell4 */
+}
+
+.dictionaryName {
+	padding-top: 0.3em;
+	font-size: 0.9em;
+	border-top: 0.2em solid #59922B;	
+	text-align: right;
+	font-weight: bold;
+	color: #8b8682; /* seashell4 */
+}
+
+
+/*=================== DICTIONARY ELEMENTS ===============*/
+.entry {
+	font-weight:bold;
+	/*font-size: 110%;*/
+	color: #006400; /* dark green */
+}
+
+.wordKind {
+	font-style:italic;
+	color: #00f; /* blue */
+}
+
+.meaning {
+	margin-left:0.25em;
+	color: #000; /* black */
+}
+
+.exampleBegin {
+	margin-left:1em;
+	color: #f00; /* red */
+}
+
+.exampleSeparator {
+	color: #696969 /* dim gray */
+}
+
+.idiom {
+	padding-top: 0.1em;
+	color: #b22222 /* firebrick */
+}
