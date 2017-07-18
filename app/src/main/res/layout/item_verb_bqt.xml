@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_click_item_history"
+    android:orientation="horizontal"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp">
+
+
+    <TextView
+        android:id="@+id/tvInFinitive"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:paddingRight="5dp"
+        android:text="@string/infinitive"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size" />
+
+    <TextView
+        android:id="@+id/tvSimplePast"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingRight="5dp"
+        android:text="@string/simplePast"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size" />
+
+    <TextView
+        android:id="@+id/tvPastParticiple"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:text="@string/PastParticiple"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size" />
+</LinearLayout>

@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lnHome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.dictionary.viru.fragments.HomeFragment">
+
+    <RelativeLayout
+        style="@style/CardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_frame_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <com.dictionary.viru.widget.customeControl.CustomEditText
+                android:id="@+id/edSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/imgSearchVoice"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableRight="@mipmap/ic_delete_search"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="15sp"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/imgSearchVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_voice" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/cvWord"-->
+    <!--style="@style/CardViewStyle"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:padding="10dp"-->
+    <!--android:elevation="0dp"-->
+    <!--card_view:cardElevation="0dp"-->
+    <!--card_view:cardBackgroundColor="@color/white">-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvListWord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp" />
+
+
+</LinearLayout>

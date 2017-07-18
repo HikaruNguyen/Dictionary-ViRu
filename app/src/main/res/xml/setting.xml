@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <com.afollestad.materialdialogs.prefs.MaterialListPreference
+        android:entries="@array/preference_values"
+        android:entryValues="@array/preference_values"
+        android:key="@string/fontSize"
+        android:persistent="true"
+        android:summary="@string/normal"
+        android:title="@string/fontSize" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/clipboard"
+        android:summary="@string/clipboardDescription"
+        android:title="@string/clipboard" />
+
+</PreferenceScreen>

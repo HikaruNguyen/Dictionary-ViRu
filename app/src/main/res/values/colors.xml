@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00539F</color>
+    <color name="colorPrimaryDark">#014c8e</color>
+    <color name="colorAccent">#E03A3E</color>
+    <color name="colorToobar">#00539F</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="bg_gray">#F7F7F7</color>
+    <color name="bg_gray_dark">#DADADA</color>
+    <color name="color_line">#FF8173</color>
+    <color name="item_click">#d4d4d4</color>
+    <color name="item_click_white">#50ffffff</color>
+    <color name="bg_frame">#f1f1f1</color>
+    <color name="bg_blue">#4184F3</color>
+    <color name="bg_blue_dark">#2f6fd6</color>
+    <color name="orange_light">#F25322</color>
+    <color name="green">#20AB3D</color>
+    <color name="white_alpha">#60ffffff</color>
+    <color name="dark_alpha">#70000000</color>
+    <color name="loginColor">#333333</color>
+</resources>

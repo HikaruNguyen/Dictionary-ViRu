@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_lookup"
+            android:checked="true"
+            android:icon="@mipmap/ic_search"
+            android:title="@string/searchword" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@mipmap/ic_history"
+            android:title="@string/history" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@mipmap/ic_favorite"
+            android:title="@string/favorite" />
+        <item
+            android:id="@+id/nav_popupDict"
+            android:icon="@mipmap/ic_popup"
+            android:title="@string/popupDict" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/ic_setting"
+            android:title="@string/setting" />
+    </group>
+
+    <!--<item android:title="@string/setting">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_setting"-->
+    <!--android:icon="@mipmap/ic_setting"-->
+    <!--android:title="@string/setting" />-->
+    <!--</menu>-->
+    <!--</item>-->
+
+</menu>

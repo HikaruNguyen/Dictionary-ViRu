@@ -1,0 +1,198 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_frame"
+    tools:context=".fragments.ReferencesFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/btnDongTuBatQuyTac"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/dongTuBatQuyTac"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#dd2a2a" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#f26522" />
+
+                <Button
+                    android:id="@+id/btnDanhTuSoNhieuBQT"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/danhTuSoNhieuBQT"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#00a651" />
+
+                <Button
+                    android:id="@+id/btnThanhNgu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/thanhNgu"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#ec008c" />
+
+                <Button
+                    android:id="@+id/btnTucNgu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/tucNgu"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#00aeef" />
+
+                <Button
+                    android:id="@+id/btnCumDongTu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/cumDongTu"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_box_tracuu"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="#39b54a" />
+
+                <Button
+                    android:id="@+id/btnCacTuVietTat"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="15dp"
+                    android:text="@string/cacTuVietTat"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:src="@mipmap/ic_search" />
+</android.support.design.widget.CoordinatorLayout>
