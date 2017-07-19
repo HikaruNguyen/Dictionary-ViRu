@@ -11,11 +11,8 @@
         style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_5dp"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_marginRight="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@drawable/bg_frame_white">
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/margin_5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,13 +25,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/imgSearchVoice"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/white"
                 android:drawableRight="@mipmap/ic_delete_search"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="@string/search"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="@color/bg_gray_dark"
                 android:textSize="@dimen/text_size_15sp" />
 
             <ImageView
@@ -45,7 +44,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:src="@mipmap/ic_voice"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/white" />
         </RelativeLayout>
 
 
