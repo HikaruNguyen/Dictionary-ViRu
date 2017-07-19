@@ -10,7 +10,6 @@ import com.dictionary.viru.model.db.DictWord;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import static com.dictionary.viru.adapter.ListDictAdapter.context;
 import static com.dictionary.viru.database.DictInfoDBHelper.DB_PATH;
 
 /**
@@ -106,50 +105,52 @@ public class DictDBHelper {
         ArrayList<DictWord> arr = new ArrayList<>();
         if (word.length() > 0) {
             String first_word = WordHash.hash(word.charAt(0)) + "";
-            DictDatabaseOpenHelper adb = new DictDatabaseOpenHelper(context);
-            SQLiteDatabase database = adb.StoreDatabase(dbName + ".ndf");
-                Cursor cursor;
-                String tableName;
-                String sql = "";
-                if (word.trim().isEmpty()) {
-                    sql += "SELECT * FROM a_t";
+//            DictDatabaseOpenHelper adb = new DictDatabaseOpenHelper(context);
+//            SQLiteDatabase database = adb.StoreDatabase(dbName + ".ndf");
+            SQLiteDatabase database;
+            database = SQLiteDatabase.openDatabase(DB_PATH + dbName + ".ndf", null, SQLiteDatabase.CREATE_IF_NECESSARY);
+            Cursor cursor;
+            String tableName;
+            String sql = "";
+            if (word.trim().isEmpty()) {
+                sql += "SELECT * FROM a_t";
+                sql += " WHERE LOWER(" + fieldObjectWord + ") LIKE '" + word + "%'";
+                sql += " ORDER BY " + fieldObjectId + " ASC";
+                sql += " LIMIT " + limit;
+            } else {
+                tableName = first_word + "_t";
+                if (isLike) {
+                    sql += "SELECT * FROM " + tableName;
                     sql += " WHERE LOWER(" + fieldObjectWord + ") LIKE '" + word + "%'";
                     sql += " ORDER BY " + fieldObjectId + " ASC";
                     sql += " LIMIT " + limit;
                 } else {
-                    tableName = first_word + "_t";
-                    if (isLike) {
-                        sql += "SELECT * FROM " + tableName;
-                        sql += " WHERE LOWER(" + fieldObjectWord + ") LIKE '" + word + "%'";
-                        sql += " ORDER BY " + fieldObjectId + " ASC";
-                        sql += " LIMIT " + limit;
-                    } else {
-                        sql += "SELECT * FROM " + tableName;
-                        sql += " WHERE LOWER(" + fieldObjectWord + ") = '" + word + "'";
-                        sql += " ORDER BY " + fieldObjectId + " ASC";
-                        sql += " LIMIT " + limit;
-                    }
+                    sql += "SELECT * FROM " + tableName;
+                    sql += " WHERE LOWER(" + fieldObjectWord + ") = '" + word + "'";
+                    sql += " ORDER BY " + fieldObjectId + " ASC";
+                    sql += " LIMIT " + limit;
+                }
 
-                }
-                try {
-                    cursor = database.rawQuery(sql, null);
-                    cursor.moveToFirst();
-                    while (!cursor.isAfterLast()) {
-                        if (type == 1) {
-                            try {
-                                arr.add(new DictWord(cursor.getInt(0), cursor.getString(1), new String(cursor.getBlob(2), "UTF-8")));
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            arr.add(new DictWord(cursor.getInt(0), cursor.getString(1), cursor.getBlob(2)));
+            }
+            try {
+                cursor = database.rawQuery(sql, null);
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    if (type == 1) {
+                        try {
+                            arr.add(new DictWord(cursor.getInt(0), cursor.getString(1), new String(cursor.getBlob(2), "UTF-8")));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
                         }
-                        cursor.moveToNext();
+                    } else {
+                        arr.add(new DictWord(cursor.getInt(0), cursor.getString(1), cursor.getBlob(2)));
                     }
-                    cursor.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    cursor.moveToNext();
                 }
+                cursor.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
             CLog.d(TAG, "array dict: " + arr.size());
