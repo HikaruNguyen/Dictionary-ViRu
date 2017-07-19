@@ -129,7 +129,7 @@ public class MultiWindow extends StandOutWindow {
     public List<DropDownListItem> getDropDownItems(int id) {
         List<DropDownListItem> items = new ArrayList<DropDownListItem>();
         items.add(new DropDownListItem(R.mipmap.ic_launcher,
-                getString(R.string.openNextDict), new Runnable() {
+                getString(R.string.openNextDict)+" "+getString(R.string.app_name), new Runnable() {
 
             @Override
             public void run() {

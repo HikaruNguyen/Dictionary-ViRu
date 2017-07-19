@@ -17,6 +17,9 @@
   <dimen name="margin_5dp">
     4.44dp
   </dimen>
+  <dimen name="margin_8dp">
+    7.11dp
+  </dimen>
   <dimen name="margin_10dp">
     8.89dp
   </dimen>
@@ -49,6 +52,9 @@
   </dimen>
   <dimen name="text_size_40sp">
     35.56sp
+  </dimen>
+  <dimen name="text_size_50sp">
+    44.44sp
   </dimen>
   <dimen name="image_size_16dp">
     14.22dp

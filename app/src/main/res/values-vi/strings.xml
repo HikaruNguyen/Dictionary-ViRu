@@ -28,7 +28,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="action_settings">Cài đặt</string>
     <string name="title_activity_popup_launcher">PopupLauncherActivity</string>
-    <string name="openNextDict">Mở NextDict</string>
+    <string name="openNextDict">Mở</string>
     <string name="exit">Thoát</string>
     <string name="late">Để sau</string>
     <string name="downNow">Tải ngay</string>

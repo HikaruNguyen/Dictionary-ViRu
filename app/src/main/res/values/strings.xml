@@ -28,7 +28,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="action_settings">Setttings</string>
     <string name="title_activity_popup_launcher">PopupLauncherActivity</string>
-    <string name="openNextDict">Open NextDict</string>
+    <string name="openNextDict">Open</string>
     <string name="exit">Exit</string>
     <string name="late">Later</string>
     <string name="downNow">Download</string>

@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -24,3 +24,74 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task convertDimens() {
+    println "Reading Dimens 360dp ....."
+    def xmlFile360 = "${project.rootDir}/app/src/main/res/values-sw360dp/dimens.xml"
+    def xmlFile320 = "${project.rootDir}/app/src/main/res/values-sw320dp/dimens.xml"
+    def xmlFile480 = "${project.rootDir}/app/src/main/res/values-sw480dp/dimens.xml"
+    //println "File " + xmlFile360
+    def xmlOriginal = new XmlParser().parse(xmlFile360)
+
+    def xml320 = xmlOriginal.clone()
+    def xml480 = xmlOriginal.clone()
+
+    xml320.dimen.each { dimen ->
+        def value = dimen.text();
+        if (value.contains("sp")) {
+            def newValue = value.replace("sp","").toFloat()
+            newValue = round((320/360 * newValue).toFloat(),2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "sp"
+            //println "New dimen " + dimen.text()
+        } else if (value.contains("px")) {
+            def newValue = value.replace("px","").toFloat()
+            newValue = round((320/360 * newValue).toFloat(),2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "px"
+            //println "New dimen " + dimen.text()
+        } else {
+            def newValue = value.replace("dp","").toFloat()
+            newValue = round((320/360 * newValue).toFloat(),2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "dp"
+            //println "New dimen " + dimen.text()
+        }
+    }
+
+    xml480.dimen.each { dimen ->
+        def value = dimen.text();
+        if (value.contains("sp")) {
+            def newValue = value.replace("sp", "").toFloat()
+            newValue = round((480 / 360 * newValue).toFloat(), 2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "sp"
+            //println "New dimen " + dimen.text()
+        } else if (value.contains("px")) {
+            def newValue = value.replace("px","").toFloat()
+            newValue = round((480/360 * newValue).toFloat(),2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "px"
+            //println "New dimen " + dimen.text()
+        } else {
+            def newValue = value.replace("dp","").toFloat()
+            newValue = round((480/360 * newValue).toFloat(),2);
+            //println dimen.@name + " --> " + value + " --> " + newValue;
+            dimen.value = newValue + "dp"
+            //println "New dimen " + dimen.text()
+        }
+    }
+
+    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile320))).print(xml320)
+    println "Has written 320 file."
+    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile480))).print(xml480)
+    println "Has written 480 file."
+}
+
+public static float round(float d, int decimalPlace) {
+    BigDecimal bd = new BigDecimal(Float.toString(d));
+    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+    return bd.floatValue();
+}
+
+clean.dependsOn convertDimens
