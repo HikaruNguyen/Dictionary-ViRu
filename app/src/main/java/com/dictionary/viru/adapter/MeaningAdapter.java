@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.dictionary.viru.NextDictUtils.AESUtils;
 import com.dictionary.viru.NextDictUtils.CLog;
 import com.dictionary.viru.R;
-import com.dictionary.viru.configuration.Configruation;
 import com.dictionary.viru.database.DictInfoDBHelper;
 import com.dictionary.viru.event.clickEvent.ClickVoiceEvent;
 import com.dictionary.viru.model.db.DictInfo;
@@ -51,7 +50,6 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         holder.bindData(list.get(position));
-        holder.line.setBackgroundColor(context.getResources().getColor(Configruation.colors[position % Configruation.colors.length]));
         holder.lnUK.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -96,8 +94,6 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvDictName;
-        private View line;
         private CustomeWebView webView;
         private ImageButton img_speechUK, img_speechUS;
         private TextView tvWord;
@@ -105,8 +101,6 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
 
         public ViewHolder(View view) {
             super(view);
-            tvDictName = (TextView) itemView.findViewById(R.id.tvDictName);
-            line = itemView.findViewById(R.id.line);
             webView = (CustomeWebView) itemView.findViewById(R.id.webView);
             webView.setType(type);
             img_speechUK = (ImageButton) itemView.findViewById(R.id.img_speechUK);
@@ -176,7 +170,6 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
                 sb.append(s);
                 sb.append("</body></HTML>");
                 webView.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html", "UTF-8", null);
-                tvDictName.setText(dictWord.dictName);
                 tvWord.setText(dictWord.dictWord.getWord());
             }
         }
