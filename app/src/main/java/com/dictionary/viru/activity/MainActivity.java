@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.dictionary.viru.NextDictUtils.CLog;
 import com.dictionary.viru.NextDictUtils.KeyboardUtils;
@@ -57,10 +58,30 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        try {
+            stopService(new Intent(this, ChatHeadService.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                if(mCurrentPage==Configruation.HOME_SEARCH_WORD){
+                    KeyboardUtils.showDelayedKeyboard(MainActivity.this, HomeFragment.edSearch);
+                }else {
+                    Utils.hideKeyboard(MainActivity.this);
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                Utils.hideKeyboard(MainActivity.this);
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -148,16 +169,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_lookup) {
             clearBackStack(getSupportFragmentManager());
             changeFragment(new HomeFragment());
             mCurrentPage = Configruation.HOME_SEARCH_WORD;
+
         } else if (id == R.id.nav_history) {
             clearBackStack(getSupportFragmentManager());
             changeFragment(new HistoryFragment());
             mCurrentPage = Configruation.HOME_HISTORY;
+
         } else if (id == R.id.nav_favorite) {
             clearBackStack(getSupportFragmentManager());
             changeFragment(new FavoriteFragment());

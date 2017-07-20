@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,7 @@ import com.dictionary.viru.NextDictUtils.CLog;
 import com.dictionary.viru.NextDictUtils.KeyboardUtils;
 import com.dictionary.viru.NextDictUtils.Utils;
 import com.dictionary.viru.R;
+import com.dictionary.viru.activity.MainActivity;
 import com.dictionary.viru.adapter.PopupWordAdapter;
 import com.dictionary.viru.configuration.Configruation;
 import com.dictionary.viru.configuration.StandOutFlags;
@@ -221,7 +223,7 @@ public class Window extends FrameLayout {
                             } else {
                                 text = charSequence.toString();
                             }
-                            if(text!=null && !text.isEmpty()){
+                            if (text != null && !text.isEmpty()) {
                                 edSearch.setText(text);
                                 edSearch.setSelection(text.length());
 //                getItemsFromDb(clipboardManager.getText().toString(), true);
@@ -804,10 +806,13 @@ public class Window extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (mContext != null) {
-                    PopupWindow dropDown = mContext.getDropDown(id);
-                    if (dropDown != null) {
-                        dropDown.showAsDropDown(icon);
-                    }
+//                    PopupWindow dropDown = mContext.getDropDown(id);
+//                    if (dropDown != null) {
+//                        dropDown.showAsDropDown(icon);
+//                    }
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
                 }
 
 //                Intent intent = new Intent(getContext(), MainActicity.class);

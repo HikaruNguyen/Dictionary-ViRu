@@ -4,24 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.dictionary.viru.NextDictUtils.AESUtils;
 import com.dictionary.viru.NextDictUtils.CLog;
 import com.dictionary.viru.NextDictUtils.FavoriteUtils;
 import com.dictionary.viru.NextDictUtils.Utils;
 import com.dictionary.viru.R;
-import com.dictionary.viru.adapter.MeaningAdapter;
 import com.dictionary.viru.configuration.Configruation;
 import com.dictionary.viru.configuration.IntentFilterConfig;
 import com.dictionary.viru.database.DictDBHelper;
+import com.dictionary.viru.database.DictInfoDBHelper;
 import com.dictionary.viru.database.FavoriteDatabase;
 import com.dictionary.viru.database.HistoryDatabase;
 import com.dictionary.viru.database.ManagerDictDatabase;
@@ -29,13 +28,14 @@ import com.dictionary.viru.event.ChangeMenuEvent;
 import com.dictionary.viru.event.HideShowKeyBoardEvent;
 import com.dictionary.viru.event.clickEvent.ClickLinkWebViewEvent;
 import com.dictionary.viru.event.clickEvent.ClickVoiceEvent;
+import com.dictionary.viru.model.db.DictInfo;
 import com.dictionary.viru.model.db.DictWord;
 import com.dictionary.viru.model.db.DictWordObject;
 import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.widget.customeControl.CustomeWebView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 
@@ -43,15 +43,18 @@ public class MeaningWordActivity extends BaseActivity {
     private static final String TAG = MeaningWordActivity.class.getSimpleName();
     private String word;
     private Context activity;
-    private RecyclerView rvListMeaning;
-    private MeaningAdapter meaningWordAdapter;
+    //    private RecyclerView rvListMeaning;
+//    private MeaningAdapter meaningWordAdapter;
     private ManagerDictDatabase managerDictDatabase;
     private HistoryDatabase historyDatabase;
     private FavoriteDatabase favoriteDatabase;
     private boolean isFavorited = false;
     private FloatingActionButton fab;
-    private TextToSpeech textToSpeechUK;
-    private TextToSpeech textToSpeechUS;
+//    private TextToSpeech textToSpeechUK;
+//    private TextToSpeech textToSpeechUS;
+
+    private CustomeWebView webView;
+    private TextView tvWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,131 +87,142 @@ public class MeaningWordActivity extends BaseActivity {
     }
 
     private void InitData() {
-        initVoice();
+//        initVoice();
         managerDictDatabase = new ManagerDictDatabase(activity);
         historyDatabase = new HistoryDatabase(activity);
         favoriteDatabase = new FavoriteDatabase(activity);
-        favoriteDatabase.open();
-        if (favoriteDatabase.isExistWord(word)) {
-            isFavorited = true;
-        } else {
-            isFavorited = false;
-        }
-        favoriteDatabase.close();
+        GetMindWordAsynTask getMindWordAsynTask = new GetMindWordAsynTask();
+        getMindWordAsynTask.execute();
+//        rvListMeaning.setVisibility(View.VISIBLE);
+//        meaningWordAdapter.clear();
 
 
-        ArrayList<DictWordObject> arr = new ArrayList<>();
-        managerDictDatabase.open();
-        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-        if (managerDicts != null && managerDicts.size() > 0) {
-            CLog.d(TAG, "managedict size " + managerDicts.size());
-            for (int i = 0; i < managerDicts.size(); i++) {
-                CLog.d(TAG, "dict name: " + managerDicts.get(i).getDictName());
-                int format_type = Utils.getFormatTypeDict(managerDicts.get(i));
-                ArrayList<DictWord> dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, false, format_type);
-                if (dictWords.size() > 0) {
-                    for (int j = 0; j < dictWords.size(); j++) {
-                        arr.add(new DictWordObject(managerDicts.get(i).getDictId(), managerDicts.get(i).getDictName(), dictWords.get(j), format_type));
+    }
+
+    private void bindMeanWord(DictWordObject dictWord) {
+        if (dictWord != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<HTML><HEAD><LINK href=\"css/result.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
+            String info = "";
+            info = DictInfoDBHelper.getInfoDict(dictWord.dictId);
+            CLog.d(TAG, "dictinfo: " + info.split("\n").length);
+            DictInfo dictInfo = new DictInfo();
+            int isEncrypted = 0;
+            int format_version = 1;
+            for (int i = 0; i < info.split("\n").length; i++) {
+                String s = info.split("\n")[i];
+                if (s.trim() != null && !s.isEmpty()) {
+                    String s1[] = s.split("=");
+                    if (s1[0].trim().equals("format_version")) {
+                        dictInfo.format_version = s1[1];
+                        try {
+                            format_version = Integer.parseInt(dictInfo.format_version);
+                        } catch (Exception e) {
+                            format_version = 1;
+                        }
+                    } else if (s1[0].trim().equals("encrypted")) {
+                        dictInfo.encrypted = s1[1];
+                        try {
+                            isEncrypted = Integer.parseInt(dictInfo.encrypted);
+                        } catch (Exception e) {
+                            isEncrypted = 0;
+                        }
+                    } else if (s1[0].trim().equals("encryptKey")) {
+                        dictInfo.encryptKey = s1[1];
                     }
-
                 }
             }
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setMessage(getString(R.string.dictNotFound));
-            builder.setNegativeButton(getString(R.string.late), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+            String s = "";
+            if (isEncrypted == 1) {
+                if (format_version == 1) {
+                    s = dictWord.dictWord.getDefinition().toString();
+                    AESUtils aesUtils = new AESUtils();
+                    aesUtils.setKey(dictInfo.encryptKey);
+                    try {
+                        s = aesUtils.decrypt(s);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    byte[] ss = dictWord.dictWord.getDefinition2();
+                    AESUtils aesUtils = new AESUtils();
+                    aesUtils.setKey(dictInfo.encryptKey);
+                    try {
+                        s = aesUtils.decrypt2(ss);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            });
-            builder.setPositiveButton(getString(R.string.downNow), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
-                }
-            });
-            builder.setCancelable(false);
-            builder.show();
-        }
-        managerDictDatabase.close();
-        rvListMeaning.setVisibility(View.VISIBLE);
-        meaningWordAdapter.clear();
-        if (arr.size() == 0) {
-            ToastMsg(activity, getString(R.string.notFoundWord));
-        }
-        meaningWordAdapter.addAll(arr);
-        historyDatabase.open();
-        if (!historyDatabase.isExistWord(word)) {
-            historyDatabase.addWordToHistory(word);
-        } else {
-            historyDatabase.updateWord(word);
-        }
 
-        historyDatabase.close();
+            }
+            sb.append(s);
+            sb.append("</body></HTML>");
+            webView.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html", "UTF-8", null);
+            tvWord.setText(dictWord.dictWord.getWord());
+        }
     }
 
-    private void initVoice() {
-        try {
-            textToSpeechUK = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-//                    if (status != TextToSpeech.ERROR) {
-//                        textToSpeechUK.setLanguage(Locale.UK);
-//                        textToSpeechUK.setPitch(1.3f);
-//                        textToSpeechUK.setSpeechRate(1f);
-//                    }
-                    if (status == TextToSpeech.SUCCESS) {
-                        int result = textToSpeechUK.setLanguage(Locale.UK);
-                        if (result == TextToSpeech.LANG_MISSING_DATA ||
-                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                            CLog.e("error", "This Language is not supported");
-                        } else {
-                            textToSpeechUK.setPitch(1.3f);
-                            textToSpeechUK.setSpeechRate(1f);
-                        }
-                    } else
-                        CLog.e(TAG, "Initilization UK Failed!");
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            textToSpeechUS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-                    if (status == TextToSpeech.SUCCESS) {
-                        int result = textToSpeechUS.setLanguage(Locale.US);
-                        if (result == TextToSpeech.LANG_MISSING_DATA ||
-                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                            CLog.e("error", "This Language is not supported");
-                        } else {
-                            textToSpeechUS.setPitch(1.0f);
-                            textToSpeechUS.setSpeechRate(1f);
-                        }
-                    } else
-                        CLog.e(TAG, "Initilization US Failed!");
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    private void initVoice() {
+//        try {
+//            textToSpeechUK = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+//                @Override
+//                public void onInit(int status) {
+////                    if (status != TextToSpeech.ERROR) {
+////                        textToSpeechUK.setLanguage(Locale.UK);
+////                        textToSpeechUK.setPitch(1.3f);
+////                        textToSpeechUK.setSpeechRate(1f);
+////                    }
+//                    if (status == TextToSpeech.SUCCESS) {
+//                        int result = textToSpeechUK.setLanguage(Locale.UK);
+//                        if (result == TextToSpeech.LANG_MISSING_DATA ||
+//                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                            CLog.e("error", "This Language is not supported");
+//                        } else {
+//                            textToSpeechUK.setPitch(1.3f);
+//                            textToSpeechUK.setSpeechRate(1f);
+//                        }
+//                    } else
+//                        CLog.e(TAG, "Initilization UK Failed!");
+//                }
+//
+//            });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            textToSpeechUS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+//                @Override
+//                public void onInit(int status) {
+//                    if (status == TextToSpeech.SUCCESS) {
+//                        int result = textToSpeechUS.setLanguage(Locale.US);
+//                        if (result == TextToSpeech.LANG_MISSING_DATA ||
+//                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                            CLog.e("error", "This Language is not supported");
+//                        } else {
+//                            textToSpeechUS.setPitch(1.0f);
+//                            textToSpeechUS.setSpeechRate(1f);
+//                        }
+//                    } else
+//                        CLog.e(TAG, "Initilization US Failed!");
+//                }
+//            });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     private void InitUI() {
         EventBus.getDefault().post(new HideShowKeyBoardEvent(HideShowKeyBoardEvent.TYPE_HIDE));
         setTitleToolbar(word);
         setBackButtonToolbar();
-        rvListMeaning = (RecyclerView) findViewById(R.id.rvListMeaning);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
-        rvListMeaning.setLayoutManager(layoutManager1);
-        rvListMeaning.setHasFixedSize(true);
-        rvListMeaning.setItemAnimator(new DefaultItemAnimator());
-        meaningWordAdapter = new MeaningAdapter(activity, new ArrayList<DictWordObject>(), Configruation.TYPE_APP);
-        rvListMeaning.setAdapter(meaningWordAdapter);
+//        rvListMeaning = (RecyclerView) findViewById(R.id.rvListMeaning);
+//        LinearLayoutManager layoutManager1 = new LinearLayoutManager(activity);
+//        rvListMeaning.setLayoutManager(layoutManager1);
+//        rvListMeaning.setHasFixedSize(true);
+//        rvListMeaning.setItemAnimator(new DefaultItemAnimator());
+//        meaningWordAdapter = new MeaningAdapter(activity, new ArrayList<DictWordObject>(), Configruation.TYPE_APP);
+//        rvListMeaning.setAdapter(meaningWordAdapter);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +238,10 @@ public class MeaningWordActivity extends BaseActivity {
                 }
             }
         });
+
+        webView = (CustomeWebView) findViewById(R.id.webView);
+        webView.setType(Configruation.TYPE_APP);
+        tvWord = (TextView) findViewById(R.id.tvWord);
     }
 
     @Override
@@ -304,25 +322,107 @@ public class MeaningWordActivity extends BaseActivity {
     }
 
     public void onEvent(ClickVoiceEvent event) {
-        if (event.type == Configruation.TYPE_APP) {
-            if (event.loc.equals(Locale.UK)) {
-                textToSpeechUK.speak(event.word, TextToSpeech.QUEUE_FLUSH, null);
-            } else if (event.loc.equals(Locale.US)) {
-                textToSpeechUS.speak(event.word, TextToSpeech.QUEUE_FLUSH, null);
-            }
-        }
+//        if (event.type == Configruation.TYPE_APP) {
+//            if (event.loc.equals(Locale.UK)) {
+//                textToSpeechUK.speak(event.word, TextToSpeech.QUEUE_FLUSH, null);
+//            } else if (event.loc.equals(Locale.US)) {
+//                textToSpeechUS.speak(event.word, TextToSpeech.QUEUE_FLUSH, null);
+//            }
+//        }
 
     }
 
     public void onPause() {
-        if (textToSpeechUK != null) {
-            textToSpeechUK.stop();
-            textToSpeechUK.shutdown();
-        }
-        if (textToSpeechUS != null) {
-            textToSpeechUS.stop();
-            textToSpeechUS.shutdown();
-        }
+//        if (textToSpeechUK != null) {
+//            textToSpeechUK.stop();
+//            textToSpeechUK.shutdown();
+//        }
+//        if (textToSpeechUS != null) {
+//            textToSpeechUS.stop();
+//            textToSpeechUS.shutdown();
+//        }
         super.onPause();
+    }
+
+    private class GetMindWordAsynTask extends AsyncTask<Void, Void, ArrayList<DictWordObject>> {
+
+        public GetMindWordAsynTask() {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<DictWordObject> doInBackground(Void... params) {
+
+            historyDatabase.open();
+            if (!historyDatabase.isExistWord(word)) {
+                historyDatabase.addWordToHistory(word);
+            } else {
+                historyDatabase.updateWord(word);
+            }
+
+            historyDatabase.close();
+
+            favoriteDatabase.open();
+            if (favoriteDatabase.isExistWord(word)) {
+                isFavorited = true;
+            } else {
+                isFavorited = false;
+            }
+            favoriteDatabase.close();
+
+
+            ArrayList<DictWordObject> arr = new ArrayList<>();
+            managerDictDatabase.open();
+            List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
+            if (managerDicts != null && managerDicts.size() > 0) {
+                CLog.d(TAG, "managedict size " + managerDicts.size());
+                for (int i = 0; i < managerDicts.size(); i++) {
+                    CLog.d(TAG, "dict name: " + managerDicts.get(i).getDictName());
+                    int format_type = Utils.getFormatTypeDict(managerDicts.get(i));
+                    ArrayList<DictWord> dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, false, format_type);
+                    if (dictWords.size() > 0) {
+                        for (int j = 0; j < dictWords.size(); j++) {
+                            arr.add(new DictWordObject(managerDicts.get(i).getDictId(), managerDicts.get(i).getDictName(), dictWords.get(j), format_type));
+                        }
+
+                    }
+                }
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(getString(R.string.dictNotFound));
+                builder.setNegativeButton(getString(R.string.late), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton(getString(R.string.downNow), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+            }
+            managerDictDatabase.close();
+            return arr;
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<DictWordObject> arr) {
+            super.onPostExecute(arr);
+            if (arr.size() == 0) {
+                ToastMsg(activity, getString(R.string.notFoundWord));
+            }
+//        meaningWordAdapter.addAll(arr);
+            bindMeanWord(arr.get(0));
+        }
     }
 }

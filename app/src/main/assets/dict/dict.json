@@ -3,22 +3,39 @@
   "statusCode": 200,
   "data": {
     "items": [
+//      {
+//        "id":"vi_ru",
+//        "name":"Vietnamese Russian Dictionary",
+//        "description":null,
+//        "src_lang":"vi",
+//        "des_lang":"ru",
+//        "word_count":35948,
+//        "author":null,
+//        "email":null,
+//        "date":null,
+//        "dict_type":1,
+//        "created_at":1467694430,
+//        "updated_at":1467694430,
+//        "res_path":null,
+//        "name2":"Tu dien Viet Nga",
+//        "url":"https://api.nextdict.com/dict/v2/vi_ru_universal.tar.gz"
+//      },
       {
-        "id":"vi_ru",
-        "name":"Vietnamese Russian Dictionary",
+        "id":"ru_vi",
+        "name":"Russian Vietnamese Dictionary",
         "description":null,
-        "src_lang":"vi",
-        "des_lang":"ru",
-        "word_count":35948,
+        "src_lang":"ru",
+        "des_lang":"vi",
+        "word_count":38039,
         "author":null,
         "email":null,
         "date":null,
         "dict_type":1,
-        "created_at":1467694430,
-        "updated_at":1467694430,
+        "created_at":1467694407,
+        "updated_at":1467694407,
         "res_path":null,
-        "name2":"Tu dien Viet Nga",
-        "url":"https://api.nextdict.com/dict/v2/vi_ru_universal.tar.gz"
+        "name2":"Tu dien Nga Viet",
+        "url":"https://api.nextdict.com/dict/v2/ru_vi_universal.tar.gz"
       }
     ],
     "_links": {
