@@ -51,11 +51,13 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_SETTING = 1;
     public static final int REQUEST_MEANING = 2;
     public static int mCurrentPage;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences(Configruation.Pref, MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
@@ -65,13 +67,13 @@ public class MainActivity extends AppCompatActivity
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                if(mCurrentPage==Configruation.HOME_SEARCH_WORD){
+                if (mCurrentPage == Configruation.HOME_SEARCH_WORD) {
                     KeyboardUtils.showDelayedKeyboard(MainActivity.this, HomeFragment.edSearch);
-                }else {
+                } else {
                     Utils.hideKeyboard(MainActivity.this);
                 }
             }
@@ -149,15 +151,29 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuLanguage = menu.findItem(R.id.action_language);
+        if (sharedPreferences.getInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI) == Configruation.KEY_VI) {
+            menuLanguage.setIcon(R.mipmap.flag_vietnam);
+        } else {
+            menuLanguage.setIcon(R.mipmap.flag_russia);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivityForResult(new Intent(getApplicationContext(), SettingActivity.class), REQUEST_SETTING);
-            mCurrentPage = Configruation.HOME_SETTING;
+        if (id == R.id.action_language) {
+//            startActivityForResult(new Intent(getApplicationContext(), SettingActivity.class), REQUEST_SETTING);
+//            mCurrentPage = Configruation.HOME_SETTING;
+            if (sharedPreferences.getInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI) == Configruation.KEY_VI) {
+                sharedPreferences.edit().putInt(Configruation.KEY_LANGUAGE, Configruation.KEY_RU).apply();
+                item.setIcon(R.mipmap.flag_russia);
+            } else {
+                sharedPreferences.edit().putInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI).apply();
+                item.setIcon(R.mipmap.flag_vietnam);
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -189,6 +205,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_popupDict) {
             showPopup(word);
             mCurrentPage = Configruation.HOME_POPUP_DICT;
+        } else if (id == R.id.nav_setting) {
+            startActivityForResult(new Intent(getApplicationContext(), SettingActivity.class), REQUEST_SETTING);
+            mCurrentPage = Configruation.HOME_SETTING;
         }
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

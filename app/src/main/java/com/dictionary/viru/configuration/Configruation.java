@@ -26,6 +26,10 @@ public class Configruation {
     public static final String Pref_Key_FontSize = "Pref_Key_FontSize";
     public static final String Pref_Key_Clipboard = "Pref_Key_Clipboard";
 
+    public static final String KEY_LANGUAGE = "key_language";
+    public static final int KEY_VI = 0;
+    public static final int KEY_RU = 1;
+
     public static final String Pref_Cache = "Pref_cache";
 
 

@@ -131,8 +131,8 @@
     <string name="country">Country</string>
     <string name="delDictFail">Dict delete error</string>
     <string name="needVersionFull">This feature is only available on the full (free)</string>
-    <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="dictionary">Dictionary</string>
 </resources>

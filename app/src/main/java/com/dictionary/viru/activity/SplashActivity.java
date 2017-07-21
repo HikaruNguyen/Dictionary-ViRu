@@ -357,15 +357,17 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         @Override
+        protected String doInBackground(String... params) {
+            LoadDictJson();
+            return null;
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             goToMain();
         }
 
-        @Override
-        protected String doInBackground(String... params) {
-            LoadDictJson();
-            return null;
-        }
+
     }
 }

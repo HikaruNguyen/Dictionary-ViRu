@@ -131,4 +131,9 @@
     <string name="country">Quốc gia</string>
     <string name="delDictFail">Xóa từ điển bị lỗi</string>
     <string name="needVersionFull">Tính năng này chỉ có trên bản full (miễn phí)</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="dictionary">Từ điển</string>
 </resources>
