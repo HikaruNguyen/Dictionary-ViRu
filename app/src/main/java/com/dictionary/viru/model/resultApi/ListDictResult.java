@@ -37,6 +37,25 @@ public class ListDictResult {
         public String name2;
         public String url;
         public boolean isDownloaded;
-        public boolean isChecked = false;
+        public int isChecked = 0;
+
+        public ListDictInfo() {
+
+        }
+
+        public ListDictInfo(String name) {
+            this.name = name;
+        }
+
+        public ListDictInfo(String id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public ListDictInfo(String id, String name, int isChecked) {
+            this.id = id;
+            this.name = name;
+            this.isChecked = isChecked;
+        }
     }
 }

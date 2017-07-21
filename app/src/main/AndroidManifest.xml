@@ -99,12 +99,6 @@
         <!-- </activity> -->
         <!-- <service android:name="com.nextdict.appandroid.activities.SmallApp" -->
         <!-- android:exported="true"/> -->
-        <activity
-            android:name=".activity.TestActivity"
-            android:label="@string/popupNextDict"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyTransparentTheme" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.SettingAppCompatActivity" />
         <activity android:name=".activity.SplashActivity">

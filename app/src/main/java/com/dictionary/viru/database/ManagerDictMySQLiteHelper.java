@@ -11,11 +11,7 @@ public class ManagerDictMySQLiteHelper extends SQLiteOpenHelper {
     public static final String MANAGER_DICT = "dict";
     public static final String MANAGER_DICT_ID = "dict_id";
     public static final String MANAGER_DICT_NAME = "dict_name";
-    public static final String MANAGER_DICT_PATH = "dict_path";
     public static final String MANAGER_DICT_CHECKED = "dict_checked";
-    public static final String MANAGER_DICT_CREAT_AT = "dict_creat_at";
-    public static final String MANAGER_DICT_UPDATE_AT = "dict_update_at";
-    public static final String MANAGER_DICT_SORT = "dict_sort";
     private static final String DATABASE_NAME = "manager_dict";
     private static final int DATABASE_VERSION = 1;
 
@@ -25,11 +21,7 @@ public class ManagerDictMySQLiteHelper extends SQLiteOpenHelper {
             + MANAGER_DICT + " text primary key, "
             + MANAGER_DICT_ID + " text, "
             + MANAGER_DICT_NAME + " text, "
-            + MANAGER_DICT_PATH + " text, "
-            + MANAGER_DICT_CHECKED + "  INTEGER, "
-            + MANAGER_DICT_CREAT_AT + "  text, "
-            + MANAGER_DICT_UPDATE_AT + " text, "
-            + MANAGER_DICT_SORT + " INTEGER );";
+            + MANAGER_DICT_CHECKED + "  INTEGER)";
 
     public ManagerDictMySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

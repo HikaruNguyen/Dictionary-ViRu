@@ -33,12 +33,10 @@ import com.dictionary.viru.event.ChangeMenuEvent;
 import com.dictionary.viru.fragments.FavoriteFragment;
 import com.dictionary.viru.fragments.HistoryFragment;
 import com.dictionary.viru.fragments.HomeFragment;
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 import com.dictionary.viru.service.ChatHeadService;
 import com.dictionary.viru.service.standOut.StandOutWindow;
 import com.dictionary.viru.service.standOut.WidgetsWindow;
-
-import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -236,8 +234,8 @@ public class MainActivity extends AppCompatActivity
     private void showPopup(String word) {
         ManagerDictDatabase managerDictDatabase = new ManagerDictDatabase(MainActivity.this);
         managerDictDatabase.open();
-        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-        if (managerDicts != null && managerDicts.size() > 0) {
+        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
+        if (listDictInfo != null) {
             if (Utils.canDrawOverlays(MainActivity.this))
                 startChatHead(word);
             else {

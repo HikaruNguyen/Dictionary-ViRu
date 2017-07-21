@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.dictionary.viru.database.DictInfoDBHelper;
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -136,9 +136,9 @@ public class Utils {
         return wordCount;
     }
 
-    public static int getFormatTypeDict(ManagerDict managerDict) {
+    public static int getFormatTypeDict(ListDictResult.ListDictInfo listDictInfo) {
         String info = "";
-        info = DictInfoDBHelper.getInfoDict(managerDict.getDictId());
+        info = DictInfoDBHelper.getInfoDict(listDictInfo.id);
         int format_version = 1;
         for (int ii = 0; ii < info.split("\n").length; ii++) {
             String s = info.split("\n")[ii];

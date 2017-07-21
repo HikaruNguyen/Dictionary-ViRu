@@ -8,7 +8,7 @@ import android.database.DatabaseUtils.InsertHelper;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +21,7 @@ public class ManagerDictDatabase {
             ManagerDictMySQLiteHelper.MANAGER_DICT,
             ManagerDictMySQLiteHelper.MANAGER_DICT_ID,
             ManagerDictMySQLiteHelper.MANAGER_DICT_NAME,
-            ManagerDictMySQLiteHelper.MANAGER_DICT_PATH,
             ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED,
-            ManagerDictMySQLiteHelper.MANAGER_DICT_CREAT_AT,
-            ManagerDictMySQLiteHelper.MANAGER_DICT_UPDATE_AT,
-            ManagerDictMySQLiteHelper.MANAGER_DICT_SORT
     };
 
     public ManagerDictDatabase(Context context) {
@@ -41,12 +37,12 @@ public class ManagerDictDatabase {
     }
 
     @SuppressWarnings("deprecation")
-    public void addAllDict(List<ManagerDict> list) throws Exception {
+    public void addAllDict(List<ListDictResult.ListDictInfo> list) throws Exception {
         database.beginTransaction();
         boolean check = false;
         InsertHelper insertHelper = new InsertHelper(database, ManagerDictMySQLiteHelper.TABLE_DICT);
 
-        for (ManagerDict obj : list) {
+        for (ListDictResult.ListDictInfo obj : list) {
             check = checkExistsDict(obj);
             if (!check) {
                 newAddDict(insertHelper, obj);
@@ -57,8 +53,8 @@ public class ManagerDictDatabase {
     }
 
     @SuppressWarnings("deprecation")
-    public void newAddDict(InsertHelper insertHelper, ManagerDict managerDict) {
-        if (managerDict == null) {
+    public void newAddDict(InsertHelper insertHelper, ListDictResult.ListDictInfo listDictInfo) {
+        if (listDictInfo == null) {
             return;
         }
         insertHelper.prepareForInsert();
@@ -66,37 +62,23 @@ public class ManagerDictDatabase {
                 .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_ID);
         int column_name = insertHelper
                 .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_NAME);
-        int column_path = insertHelper
-                .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_PATH);
         int column_check = insertHelper
                 .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED);
-        int column_creat = insertHelper
-                .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_CREAT_AT);
-        int column_update = insertHelper
-                .getColumnIndex(ManagerDictMySQLiteHelper.MANAGER_DICT_UPDATE_AT);
         long time = System.currentTimeMillis();
-        insertHelper.bind(column_id, managerDict.getDictId());
-        insertHelper.bind(column_name, managerDict.getDictName());
-        insertHelper.bind(column_path, managerDict.getDictPath());
-        insertHelper.bind(column_check, managerDict.getIsChecked());
-        insertHelper.bind(column_creat, time + "");
-        insertHelper.bind(column_update, time + "");
+        insertHelper.bind(column_id, listDictInfo.id);
+        insertHelper.bind(column_name, listDictInfo.name);
+        insertHelper.bind(column_check, listDictInfo.isChecked);
         insertHelper.execute();
     }
 
-    public boolean addDict(ManagerDict managerDict) {
+    public boolean addDict(ListDictResult.ListDictInfo listDictInfo) {
         ContentValues values = new ContentValues();
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_ID,
-                managerDict.getDictId());
+                listDictInfo.id);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_NAME,
-                managerDict.getDictName());
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_PATH,
-                managerDict.getDictPath());
+                listDictInfo.name);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED,
-                managerDict.getIsChecked());
-        long time = System.currentTimeMillis();
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CREAT_AT, time + "");
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_UPDATE_AT, time + "");
+                listDictInfo.isChecked);
         long insertId = database.insert(ManagerDictMySQLiteHelper.TABLE_DICT, null,
                 values);
 
@@ -106,20 +88,14 @@ public class ManagerDictDatabase {
             return false;
     }
 
-    public boolean addDict(ManagerDict managerDict, int position) {
+    public boolean addDict(ListDictResult.ListDictInfo listDictInfo, int position) {
         ContentValues values = new ContentValues();
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_ID,
-                managerDict.getDictId());
+                listDictInfo.id);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_NAME,
-                managerDict.getDictName());
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_PATH,
-                managerDict.getDictPath());
+                listDictInfo.name);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED,
-                managerDict.getIsChecked());
-        long time = System.currentTimeMillis();
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CREAT_AT, time + "");
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_UPDATE_AT, time + "");
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_SORT, position);
+                listDictInfo.isChecked);
         long insertId = database.insert(ManagerDictMySQLiteHelper.TABLE_DICT, null,
                 values);
 
@@ -129,21 +105,15 @@ public class ManagerDictDatabase {
             return false;
     }
 
-    public boolean addDict(ManagerDict managerDict, boolean isCheck) {
+    public boolean addDict(ListDictResult.ListDictInfo listDictInfo, boolean isCheck) {
         ContentValues values = new ContentValues();
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_ID,
-                managerDict.getDictId());
+                listDictInfo.id);
         int check = isCheck ? 1 : 0;
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_NAME,
-                managerDict.getDictName());
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_PATH,
-                managerDict.getDictPath());
+                listDictInfo.name);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED,
-                managerDict.getIsChecked());
-        long time = System.currentTimeMillis();
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CREAT_AT, time + "");
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_UPDATE_AT, time + "");
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED, check + "");
+                check);
         long insertId = database.insert(ManagerDictMySQLiteHelper.TABLE_DICT, null,
                 values);
 
@@ -153,17 +123,17 @@ public class ManagerDictDatabase {
             return false;
     }
 
-    public boolean delDict(ManagerDict managerDict) {
+    public boolean delDict(ListDictResult.ListDictInfo listDictInfo) {
         ContentValues values = new ContentValues();
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_ID,
-                managerDict.getDictId());
+                listDictInfo.id);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_NAME,
-                managerDict.getDictName());
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_PATH,
-                managerDict.getDictPath());
+                listDictInfo.name);
         values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED,
-                managerDict.getIsChecked());
-        long insertId = database.delete(ManagerDictMySQLiteHelper.TABLE_DICT, ManagerDictMySQLiteHelper.MANAGER_DICT_ID + " ='" + managerDict.getDictId() + "'",
+                listDictInfo.isChecked);
+        long insertId = database.delete(
+                ManagerDictMySQLiteHelper.TABLE_DICT,
+                ManagerDictMySQLiteHelper.MANAGER_DICT_ID + " ='" + listDictInfo.id + "'",
                 null);
 
         if (insertId != -1)
@@ -181,18 +151,17 @@ public class ManagerDictDatabase {
             return false;
     }
 
-    public List<ManagerDict> getAllDictIfChecked() {
+    public List<ListDictResult.ListDictInfo> getAllDictIfChecked() {
         String where = ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED + " =1";
 
-        List<ManagerDict> likes = new ArrayList<ManagerDict>();
+        List<ListDictResult.ListDictInfo> likes = new ArrayList<>();
 
         Cursor cursor = database.query(ManagerDictMySQLiteHelper.TABLE_DICT,
-                allColumns, null, null, null, null,
-                ManagerDictMySQLiteHelper.MANAGER_DICT_SORT + " ASC");
+                allColumns, where, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ManagerDict listLiveChannelForm = cursorToLive(cursor);
+            ListDictResult.ListDictInfo listLiveChannelForm = cursorToLive(cursor);
             likes.add(listLiveChannelForm);
             cursor.moveToNext();
         }
@@ -201,10 +170,32 @@ public class ManagerDictDatabase {
         return likes;
     }
 
-    public boolean checkExistsDict(ManagerDict managerDict) {
-        if (managerDict == null)
-            return true;
-        String id = managerDict.getDictId();
+    public ListDictResult.ListDictInfo getDictIfChecked() {
+        String where = ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED + " =1";
+
+        List<ListDictResult.ListDictInfo> likes = new ArrayList<>();
+
+        Cursor cursor = database.query(ManagerDictMySQLiteHelper.TABLE_DICT,
+                allColumns, where, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ListDictResult.ListDictInfo listLiveChannelForm = cursorToLive(cursor);
+            likes.add(listLiveChannelForm);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        if (likes == null || likes.size() <= 0) {
+            return null;
+        }
+        return likes.get(0);
+    }
+
+    public boolean checkExistsDict(ListDictResult.ListDictInfo info) {
+        if (info == null)
+            return false;
+        String id = info.id;
 
         Cursor cursor = database.query(ManagerDictMySQLiteHelper.TABLE_DICT,
                 allColumns, ManagerDictMySQLiteHelper.MANAGER_DICT_ID + " = '" + id
@@ -237,9 +228,8 @@ public class ManagerDictDatabase {
 
     }
 
-    public boolean checDictIsCheck(ManagerDict managerDict) {
-        int isChecked = managerDict.getIsChecked();
-        String id = managerDict.getDictId();
+    public boolean checDictIsCheck(ListDictResult.ListDictInfo listDictInfo) {
+        String id = listDictInfo.id;
         Cursor cursor = database.query(ManagerDictMySQLiteHelper.TABLE_DICT,
                 allColumns, ManagerDictMySQLiteHelper.MANAGER_DICT_ID + " = '" + id + "' AND " + ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED
                         + " = 1", null, null, null, null);
@@ -275,22 +265,8 @@ public class ManagerDictDatabase {
             return false;
     }
 
-    public boolean addNumberSort(String id, int position) {
-        ContentValues values = new ContentValues();
-
-        values.put(ManagerDictMySQLiteHelper.MANAGER_DICT_SORT, position);
-
-        long insertId = database.update(ManagerDictMySQLiteHelper.TABLE_DICT, values,
-                ManagerDictMySQLiteHelper.MANAGER_DICT_ID + " = '" + id + "'", null);
-
-        if (insertId > 0)
-            return true;
-        else
-            return false;
-    }
-
-    private ManagerDict cursorToLive(Cursor cursor) {
-        ManagerDict managerDict = new ManagerDict(cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
+    private ListDictResult.ListDictInfo cursorToLive(Cursor cursor) {
+        ListDictResult.ListDictInfo managerDict = new ListDictResult.ListDictInfo(cursor.getString(1), cursor.getString(2), cursor.getInt(3));
         return managerDict;
     }
 

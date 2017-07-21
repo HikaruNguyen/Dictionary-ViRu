@@ -31,11 +31,10 @@ import com.dictionary.viru.event.clickEvent.ClickVoiceEvent;
 import com.dictionary.viru.model.db.DictInfo;
 import com.dictionary.viru.model.db.DictWord;
 import com.dictionary.viru.model.db.DictWordObject;
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 import com.dictionary.viru.widget.customeControl.CustomeWebView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -376,20 +375,18 @@ public class MeaningWordActivity extends BaseActivity {
 
             ArrayList<DictWordObject> arr = new ArrayList<>();
             managerDictDatabase.open();
-            List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-            if (managerDicts != null && managerDicts.size() > 0) {
-                CLog.d(TAG, "managedict size " + managerDicts.size());
-                for (int i = 0; i < managerDicts.size(); i++) {
-                    CLog.d(TAG, "dict name: " + managerDicts.get(i).getDictName());
-                    int format_type = Utils.getFormatTypeDict(managerDicts.get(i));
-                    ArrayList<DictWord> dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, false, format_type);
-                    if (dictWords.size() > 0) {
-                        for (int j = 0; j < dictWords.size(); j++) {
-                            arr.add(new DictWordObject(managerDicts.get(i).getDictId(), managerDicts.get(i).getDictName(), dictWords.get(j), format_type));
-                        }
-
+            ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
+            if (listDictInfo != null) {
+                CLog.d(TAG, "dict name: " + listDictInfo.name);
+                int format_type = Utils.getFormatTypeDict(listDictInfo);
+                ArrayList<DictWord> dictWords = DictDBHelper.filterWord(listDictInfo.id, word, false, format_type);
+                if (dictWords.size() > 0) {
+                    for (int j = 0; j < dictWords.size(); j++) {
+                        arr.add(new DictWordObject(listDictInfo.id,listDictInfo.name, dictWords.get(j), format_type));
                     }
+
                 }
+
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage(getString(R.string.dictNotFound));

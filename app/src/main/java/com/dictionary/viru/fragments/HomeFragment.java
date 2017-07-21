@@ -25,7 +25,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dictionary.viru.NextDictUtils.CLog;
 import com.dictionary.viru.NextDictUtils.KeyboardUtils;
 import com.dictionary.viru.NextDictUtils.Utils;
 import com.dictionary.viru.R;
@@ -40,7 +39,7 @@ import com.dictionary.viru.database.ManagerDictDatabase;
 import com.dictionary.viru.event.ChangeMenuEvent;
 import com.dictionary.viru.event.HideShowKeyBoardEvent;
 import com.dictionary.viru.model.db.DictWord;
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 import com.dictionary.viru.widget.DividerItemDecoration;
 import com.dictionary.viru.widget.DrawableClickListener;
 import com.dictionary.viru.widget.customeControl.CustomEditText;
@@ -100,8 +99,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             wordShare = getArguments().getString(ARG_PARAM_WORD);
             if (wordShare != null && wordShare.isEmpty()) {
                 managerDictDatabase.open();
-                List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-                if (managerDicts != null && managerDicts.size() > 0) {
+                List<ListDictResult.ListDictInfo> listDictInfos = managerDictDatabase.getAllDictIfChecked();
+                if (listDictInfos != null && listDictInfos.size() > 0) {
                     if (adapter.getItemCount() == 0) {
                         ToastMsg(activity, getString(R.string.notFoundWord));
                     } else {
@@ -148,8 +147,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 //                        startActivity(intent);
                     } else {
                         managerDictDatabase.open();
-                        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-                        if (managerDicts != null && managerDicts.size() > 0) {
+                        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
+                        if (listDictInfo != null) {
                             if (adapter.getItemCount() == 0) {
                                 if (activity != null)
                                     ToastMsg(activity, activity.getResources().getString(R.string.notFoundWord));
@@ -312,29 +311,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private ArrayList<DictWord> showHintWord(String word) {
         word = word.toLowerCase();
         managerDictDatabase.open();
-        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
+        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
         ArrayList<DictWord> wordArrayList = new ArrayList<>();
-        if (managerDicts != null && managerDicts.size() > 0) {
-            CLog.d(TAG, "managedict sizeL " + managerDicts.size());
-            for (int i = 0; i < managerDicts.size(); i++) {
-                int format_version = Utils.getFormatTypeDict(managerDicts.get(i));
-                dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, true, format_version);
-                if (dictWords.size() > 0) {
-                    for (int j = 0; j < dictWords.size(); j++) {
-                        boolean isSame = false;
-                        for (int k = 0; k < wordArrayList.size(); k++) {
-                            if (wordArrayList.get(k).getWord().trim().equals(dictWords.get(j).getWord().trim())) {
-                                isSame = true;
-                                break;
-                            }
-                        }
-                        if (!isSame) {
-                            wordArrayList.add(dictWords.get(j));
+        if (listDictInfo != null) {
+
+            int format_version = Utils.getFormatTypeDict(listDictInfo);
+            dictWords = DictDBHelper.filterWord(listDictInfo.id, word, true, format_version);
+            if (dictWords.size() > 0) {
+                for (int j = 0; j < dictWords.size(); j++) {
+                    boolean isSame = false;
+                    for (int k = 0; k < wordArrayList.size(); k++) {
+                        if (wordArrayList.get(k).getWord().trim().equals(dictWords.get(j).getWord().trim())) {
+                            isSame = true;
+                            break;
                         }
                     }
+                    if (!isSame) {
+                        wordArrayList.add(dictWords.get(j));
+                    }
                 }
-
             }
+
+
             Collections.sort(wordArrayList, new Comparator<DictWord>() {
                 @Override
                 public int compare(DictWord lhs, DictWord rhs) {

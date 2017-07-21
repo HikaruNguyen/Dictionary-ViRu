@@ -44,7 +44,7 @@ import com.dictionary.viru.event.clickEvent.ClickLinkWebViewEvent;
 import com.dictionary.viru.event.clickEvent.ClickMenuPopupEvent;
 import com.dictionary.viru.model.db.DictWord;
 import com.dictionary.viru.model.db.DictWordObject;
-import com.dictionary.viru.model.db.ManagerDict;
+import com.dictionary.viru.model.resultApi.ListDictResult;
 import com.dictionary.viru.widget.DrawableClickListener;
 import com.dictionary.viru.widget.customeControl.CustomAutoCompleteTextChangedListener;
 import com.dictionary.viru.widget.customeControl.CustomAutoCompleteView;
@@ -251,8 +251,8 @@ public class Window extends FrameLayout {
             edSearch.setText(word);
             edSearch.setSelection(word.length());
             managerDictDatabase.open();
-            List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-            if (managerDicts != null && managerDicts.size() > 0) {
+            ListDictResult.ListDictInfo managerDicts = managerDictDatabase.getDictIfChecked();
+            if (managerDicts != null) {
                 searchWord(word);
                 edSearch.dismissDropDown();
                 KeyboardUtils.hideKeyboard(getContext(), edSearch);
@@ -611,8 +611,8 @@ public class Window extends FrameLayout {
 //                        getContext().startActivity(intent);
                     } else {
                         managerDictDatabase.open();
-                        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-                        if (managerDicts != null && managerDicts.size() > 0) {
+                        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
+                        if (listDictInfo != null) {
                             if (adapter.getCount() == 0) {
 //                            ToastMsg(activity,getString(R.string.notFoundWord));
                                 Toast.makeText(getContext(), getContext().getString(R.string.notFoundWord), Toast.LENGTH_SHORT).show();
@@ -687,30 +687,28 @@ public class Window extends FrameLayout {
     public void getItemsFromDb(String word, boolean isClipboard) {
         word = word.toLowerCase();
         managerDictDatabase.open();
-        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
+        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
         managerDictDatabase.close();
         ArrayList<DictWord> wordArrayList = new ArrayList<>();
-        if (managerDicts != null && managerDicts.size() > 0) {
-            CLog.d(TAG, "managedict size " + managerDicts.size());
-            for (int i = 0; i < managerDicts.size(); i++) {
-                int format_type = Utils.getFormatTypeDict(managerDicts.get(i));
-                dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, true, 10, format_type);
-                if (dictWords.size() > 0) {
-                    for (int j = 0; j < dictWords.size(); j++) {
-                        boolean isSame = false;
-                        for (int k = 0; k < wordArrayList.size(); k++) {
-                            if (wordArrayList.get(k).getWord().trim().equals(dictWords.get(j).getWord().trim())) {
-                                isSame = true;
-                                break;
-                            }
-                        }
-                        if (!isSame) {
-                            wordArrayList.add(dictWords.get(j));
+        if (listDictInfo != null) {
+
+            int format_type = Utils.getFormatTypeDict(listDictInfo);
+            dictWords = DictDBHelper.filterWord(listDictInfo.id, word, true, 10, format_type);
+            if (dictWords.size() > 0) {
+                for (int j = 0; j < dictWords.size(); j++) {
+                    boolean isSame = false;
+                    for (int k = 0; k < wordArrayList.size(); k++) {
+                        if (wordArrayList.get(k).getWord().trim().equals(dictWords.get(j).getWord().trim())) {
+                            isSame = true;
+                            break;
                         }
                     }
+                    if (!isSame) {
+                        wordArrayList.add(dictWords.get(j));
+                    }
                 }
-
             }
+
             Collections.sort(wordArrayList, new Comparator<DictWord>() {
                 @Override
                 public int compare(DictWord lhs, DictWord rhs) {
@@ -741,21 +739,19 @@ public class Window extends FrameLayout {
     private void searchWord(String word) {
         ArrayList<DictWordObject> arr = new ArrayList<>();
         managerDictDatabase.open();
-        List<ManagerDict> managerDicts = managerDictDatabase.getAllDictIfChecked();
-        if (managerDicts != null && managerDicts.size() > 0) {
-            CLog.d(TAG, "managedict size " + managerDicts.size());
-            for (int i = 0; i < managerDicts.size(); i++) {
-                CLog.d(TAG, "dict name: " + managerDicts.get(i).getDictName());
-                int format_type = Utils.getFormatTypeDict(managerDicts.get(i));
-                ArrayList<DictWord> dictWords = DictDBHelper.filterWord(managerDicts.get(i).getDictId(), word, false, format_type);
-                if (dictWords.size() > 0) {
-                    for (int j = 0; j < dictWords.size(); j++) {
-                        arr.add(new DictWordObject(managerDicts.get(i).getDictId(), managerDicts.get(i).getDictName(), dictWords.get(j), format_type));
-                    }
-                    imgMove.setVisibility(GONE);
-                    contain.setVisibility(GONE);
+        ListDictResult.ListDictInfo listDictInfo = managerDictDatabase.getDictIfChecked();
+        if (listDictInfo != null) {
+            CLog.d(TAG, "dict name: " + listDictInfo.name);
+            int format_type = Utils.getFormatTypeDict(listDictInfo);
+            ArrayList<DictWord> dictWords = DictDBHelper.filterWord(listDictInfo.id, word, false, format_type);
+            if (dictWords.size() > 0) {
+                for (int j = 0; j < dictWords.size(); j++) {
+                    arr.add(new DictWordObject(listDictInfo.id, listDictInfo.name, dictWords.get(j), format_type));
                 }
+                imgMove.setVisibility(GONE);
+                contain.setVisibility(GONE);
             }
+
 
             WidgetsWindow.arr = arr;
             WidgetsWindow.meaningWordAdapter.clear();
