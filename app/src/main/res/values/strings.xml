@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">Dictionary Viet-Russia</string>
-    <string name="app_name_splash">Dictionary\nViet-Russia</string>
+    <string name="app_name">Viet-Russia Russia-Viet Dictionary</string>
+    <string name="app_name_vi_ru">Viet-Russia Dictionary</string>
+    <string name="app_name_ru_vi">Russia-Viet Dictionary</string>
+    <string name="app_name_splash">Viet-Russia Russia-Viet\nDictionary</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_connect">No internet connection!</string>
     <string name="history">History</string>
-    <string name="favorite">Favorite</string>
+    <string name="favorite">Bookmark</string>
     <string name="translate">Sentence translator</string>
     <string name="selectDict">Manage Dicts</string>
     <string name="help">Help</string>
@@ -13,7 +15,7 @@
     <string name="setting">Settings</string>
     <string name="popupDict">Popup mode</string>
     <string name="noSupportSpeechVoice">No text-to-speech (TTS) engine found on your device!</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="download_fail">Download failed!</string>
     <string name="search">Search…</string>
     <string name="dictNotFound">No dictionaries downloaded, download now?</string>
@@ -134,5 +136,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="dictionary">Dictionary</string>
 </resources>

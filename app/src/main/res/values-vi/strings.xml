@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">Từ điển Việt-Nga</string>
-    <string name="app_name_splash">Từ điển\nViệt-Nga</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Từ Điển Việt-Nga Nga-Việt</string>
+    <string name="app_name_vi_ru">Từ Điển Việt-Nga</string>
+    <string name="app_name_ru_vi">Từ Điển Nga-Việt</string>
+    <string name="app_name_splash">Từ Điển\nViệt-Nga Nga-Việt</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_connect">Vui lòng kiểm tra kết nối mang!</string>
     <string name="history">Lịch sử</string>
-    <string name="favorite">Yêu thích</string>
+    <string name="favorite">Đánh dấu</string>
     <string name="translate">Dịch câu</string>
     <string name="selectDict">Chọn từ điển</string>
     <string name="help">Hướng dẫn</string>

@@ -1,10 +1,8 @@
 package com.dictionary.viru.service.standOut;
 
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,7 +36,6 @@ import com.dictionary.viru.configuration.StandOutFlags;
 import com.dictionary.viru.database.DictDBHelper;
 import com.dictionary.viru.database.HistoryDatabase;
 import com.dictionary.viru.database.ManagerDictDatabase;
-import com.dictionary.viru.event.ChangeMenuEvent;
 import com.dictionary.viru.event.UnfocusPopupEvent;
 import com.dictionary.viru.event.clickEvent.ClickLinkWebViewEvent;
 import com.dictionary.viru.event.clickEvent.ClickMenuPopupEvent;
@@ -761,23 +758,23 @@ public class Window extends FrameLayout {
 //            }
         } else {
 //            ToastMsg(activity, getString(R.string.dictNotFound));
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setMessage(getResources().getString(R.string.dictNotFound));
-            builder.setNegativeButton(getResources().getString(R.string.late), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setPositiveButton(getResources().getString(R.string.downNow), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-//                    Utils.hideKeyboard(mContext);
-                    EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
-                }
-            });
-            builder.setCancelable(false);
-            builder.show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//            builder.setMessage(getResources().getString(R.string.dictNotFound));
+//            builder.setNegativeButton(getResources().getString(R.string.late), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                }
+//            });
+//            builder.setPositiveButton(getResources().getString(R.string.downNow), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+////                    Utils.hideKeyboard(mContext);
+//                    EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.show();
         }
         managerDictDatabase.close();
         historyDatabase.open();

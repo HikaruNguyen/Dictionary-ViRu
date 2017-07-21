@@ -30,6 +30,7 @@ import com.dictionary.viru.configuration.Configruation;
 import com.dictionary.viru.configuration.IntentFilterConfig;
 import com.dictionary.viru.database.ManagerDictDatabase;
 import com.dictionary.viru.event.ChangeMenuEvent;
+import com.dictionary.viru.fragments.BaseFragment;
 import com.dictionary.viru.fragments.FavoriteFragment;
 import com.dictionary.viru.fragments.HistoryFragment;
 import com.dictionary.viru.fragments.HomeFragment;
@@ -38,7 +39,7 @@ import com.dictionary.viru.service.ChatHeadService;
 import com.dictionary.viru.service.standOut.StandOutWindow;
 import com.dictionary.viru.service.standOut.WidgetsWindow;
 
-import de.greenrobot.event.EventBus;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -50,14 +51,22 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_MEANING = 2;
     public static int mCurrentPage;
     private SharedPreferences sharedPreferences;
+    private Toolbar toolbar;
+    private BaseFragment fragment;
+    private ManagerDictDatabase managerDictDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences(Configruation.Pref, MODE_PRIVATE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (sharedPreferences.getInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI) == Configruation.KEY_VI) {
+            toolbar.setTitle(getString(R.string.app_name_vi_ru));
+        } else {
+            toolbar.setTitle(getString(R.string.app_name_ru_vi));
+        }
         try {
             stopService(new Intent(this, ChatHeadService.class));
         } catch (Exception e) {
@@ -99,8 +108,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void InitData() {
+        managerDictDataSource = new ManagerDictDatabase(this);
         StandOutWindow.closeAll(this, WidgetsWindow.class);
-        changeFragment(new HomeFragment());
+        fragment = new HomeFragment();
+        changeFragment(fragment);
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -152,8 +163,10 @@ public class MainActivity extends AppCompatActivity
         MenuItem menuLanguage = menu.findItem(R.id.action_language);
         if (sharedPreferences.getInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI) == Configruation.KEY_VI) {
             menuLanguage.setIcon(R.mipmap.flag_vietnam);
+            toolbar.setTitle(getString(R.string.app_name_vi_ru));
         } else {
             menuLanguage.setIcon(R.mipmap.flag_russia);
+            toolbar.setTitle(getString(R.string.app_name_ru_vi));
         }
         return true;
     }
@@ -167,14 +180,46 @@ public class MainActivity extends AppCompatActivity
             if (sharedPreferences.getInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI) == Configruation.KEY_VI) {
                 sharedPreferences.edit().putInt(Configruation.KEY_LANGUAGE, Configruation.KEY_RU).apply();
                 item.setIcon(R.mipmap.flag_russia);
+                toolbar.setTitle(getString(R.string.app_name_ru_vi));
+                changeDict(Configruation.KEY_RU);
             } else {
                 sharedPreferences.edit().putInt(Configruation.KEY_LANGUAGE, Configruation.KEY_VI).apply();
                 item.setIcon(R.mipmap.flag_vietnam);
+                toolbar.setTitle(getString(R.string.app_name_vi_ru));
+                changeDict(Configruation.KEY_VI);
             }
-
+            if (mCurrentPage == Configruation.HOME_SEARCH_WORD) {
+                ((HomeFragment) fragment).adapter.clear();
+                HomeFragment.edSearch.setText("");
+            }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeDict(int keyDict) {
+        managerDictDataSource.open();
+        List<ListDictResult.ListDictInfo> list = managerDictDataSource.getAllDict();
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (keyDict == Configruation.KEY_VI) {
+                    if (list.get(i).id.equals("vi_ru")) {
+                        managerDictDataSource.addChecked(list.get(i).id, 1);
+                    } else {
+                        managerDictDataSource.addChecked(list.get(i).id, 0);
+                    }
+                } else {
+                    if (list.get(i).id.equals("ru_vi")) {
+                        managerDictDataSource.addChecked(list.get(i).id, 1);
+                    } else {
+                        managerDictDataSource.addChecked(list.get(i).id, 0);
+                    }
+                }
+
+            }
+        }
+
+        managerDictDataSource.close();
     }
 
     public DrawerLayout drawer;
@@ -188,17 +233,20 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_lookup) {
             clearBackStack(getSupportFragmentManager());
-            changeFragment(new HomeFragment());
+            fragment = new HomeFragment();
+            changeFragment(fragment);
             mCurrentPage = Configruation.HOME_SEARCH_WORD;
 
         } else if (id == R.id.nav_history) {
             clearBackStack(getSupportFragmentManager());
-            changeFragment(new HistoryFragment());
+            fragment = new HistoryFragment();
+            changeFragment(fragment);
             mCurrentPage = Configruation.HOME_HISTORY;
 
         } else if (id == R.id.nav_favorite) {
             clearBackStack(getSupportFragmentManager());
-            changeFragment(new FavoriteFragment());
+            fragment = new FavoriteFragment();
+            changeFragment(fragment);
             mCurrentPage = Configruation.HOME_FAVORITE;
         } else if (id == R.id.nav_popupDict) {
             showPopup(word);
@@ -244,26 +292,26 @@ public class MainActivity extends AppCompatActivity
             }
             finish();
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage(getString(R.string.dictNotFound));
-            builder.setNegativeButton(getString(R.string.late), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    if (mCurrentPage == Configruation.HOME_SEARCH_WORD) {
-                        KeyboardUtils.showDelayedKeyboard(MainActivity.this, HomeFragment.edSearch);
-                    }
-                }
-            });
-            builder.setPositiveButton(getString(R.string.downNow), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Utils.hideKeyboard(MainActivity.this);
-                    EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
-                }
-            });
-            builder.setCancelable(false);
-            builder.show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//            builder.setMessage(getString(R.string.dictNotFound));
+//            builder.setNegativeButton(getString(R.string.late), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    if (mCurrentPage == Configruation.HOME_SEARCH_WORD) {
+//                        KeyboardUtils.showDelayedKeyboard(MainActivity.this, HomeFragment.edSearch);
+//                    }
+//                }
+//            });
+//            builder.setPositiveButton(getString(R.string.downNow), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    Utils.hideKeyboard(MainActivity.this);
+//                    EventBus.getDefault().post(new ChangeMenuEvent(Configruation.HOME_SELECT_DICT));
+//                }
+//            });
+//            builder.setCancelable(false);
+//            builder.show();
         }
 
 

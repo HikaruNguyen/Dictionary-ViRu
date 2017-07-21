@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public static CustomEditText edSearch;
     private RecyclerView rvListWord;
     private RecyclerView rvListMeaning;
-    private ListWordAdapter adapter;
+    public ListWordAdapter adapter;
     //    private CardView cvWord;
     private boolean isClickItem = false;
     //    private ManagerDictDatabase databaseHandler;
@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                         searchHintWord(wordShare);
                     }
                 } else {
-                    showPopupNoDict();
+//                    showPopupNoDict();
                 }
             }
         }
@@ -158,8 +158,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                                 searchHintWord(word);
                             }
                         } else {
-                            if (getActivity() != null)
-                                showPopupNoDict();
+//                            if (getActivity() != null)
+//                                showPopupNoDict();
                         }
 
                     }

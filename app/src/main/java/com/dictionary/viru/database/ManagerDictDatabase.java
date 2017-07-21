@@ -151,6 +151,24 @@ public class ManagerDictDatabase {
             return false;
     }
 
+    public List<ListDictResult.ListDictInfo> getAllDict() {
+
+        List<ListDictResult.ListDictInfo> likes = new ArrayList<>();
+
+        Cursor cursor = database.query(ManagerDictMySQLiteHelper.TABLE_DICT,
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ListDictResult.ListDictInfo listLiveChannelForm = cursorToLive(cursor);
+            likes.add(listLiveChannelForm);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return likes;
+    }
+
     public List<ListDictResult.ListDictInfo> getAllDictIfChecked() {
         String where = ManagerDictMySQLiteHelper.MANAGER_DICT_CHECKED + " =1";
 
