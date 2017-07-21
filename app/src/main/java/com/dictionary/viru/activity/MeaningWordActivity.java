@@ -414,7 +414,10 @@ public class MeaningWordActivity extends BaseActivity {
                 ToastMsg(activity, getString(R.string.notFoundWord));
             }
 //        meaningWordAdapter.addAll(arr);
-            bindMeanWord(arr.get(0));
+            else{
+                bindMeanWord(arr.get(0));
+            }
+
         }
     }
 }

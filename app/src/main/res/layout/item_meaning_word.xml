@@ -28,7 +28,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/lnVoiceUK"
-                    android:text="a"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />

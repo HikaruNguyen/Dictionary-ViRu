@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'dictionaryAndroid'
+            keyPassword 'dictionaryManhnd'
+            storeFile file('D:/MyProject/Dict/Dictionary-ViRu/keystore.jks')
+            storePassword 'dictionaryManhnd'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     defaultConfig {
@@ -13,13 +21,18 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        packagingOptions {
-            exclude 'META-INF/DEPENDENCIES'
-            exclude 'META-INF/NOTICE'
-            exclude 'META-INF/LICENSE'
+//        packagingOptions {
+//            exclude 'META-INF/DEPENDENCIES'
+//            exclude 'META-INF/NOTICE'
+//            exclude 'META-INF/LICENSE'
+//        }
+        debug {
+            minifyEnabled true
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -43,9 +56,6 @@ dependencies {
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
     compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    compile 'org.apache.httpcomponents:httpcore:4.4.6'
-    compile 'org.apache.httpcomponents:httpmime:4.5.3'
-    compile 'org.apache.commons:commons-compress:1.14'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.balysv:material-ripple:1.0.2'
@@ -53,7 +63,6 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.pnikosis:materialish-progress:1.7'
-    compile 'br.com.bemobi:medescope:1.1.2'
     compile 'com.turingtechnologies.materialscrollbar:lib:8.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
