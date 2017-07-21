@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -170,5 +171,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

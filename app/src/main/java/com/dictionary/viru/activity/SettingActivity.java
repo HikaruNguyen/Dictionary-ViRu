@@ -76,11 +76,6 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            setResult(RESULT_OK);
-            finish();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -455,10 +455,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     }
 
+
     public void searchHintWord(String word) {
         Intent intent = new Intent(activity, MeaningWordActivity.class);
         intent.putExtra("word", word);
         activity.startActivityForResult(intent, MainActivity.REQUEST_MEANING);
+        getActivity().overridePendingTransition(R.anim.animation,
+                R.anim.animation2);
     }
 
     @Override

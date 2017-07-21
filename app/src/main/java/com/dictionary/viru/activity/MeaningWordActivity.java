@@ -254,9 +254,7 @@ public class MeaningWordActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-        } else if (id == R.id.action_favorite) {
+        if (id == R.id.action_favorite) {
             if (isFavorited) {
                 item.setIcon(getResources().getDrawable(R.mipmap.ic_favorite_2));
 

@@ -206,8 +206,10 @@ public class MainActivity extends AppCompatActivity
             showPopup(word);
             mCurrentPage = Configruation.HOME_POPUP_DICT;
         } else if (id == R.id.nav_setting) {
-            startActivityForResult(new Intent(getApplicationContext(), SettingActivity.class), REQUEST_SETTING);
             mCurrentPage = Configruation.HOME_SETTING;
+            startActivityForResult(new Intent(getApplicationContext(), SettingActivity.class), REQUEST_SETTING);
+            overridePendingTransition(R.anim.animation,
+                    R.anim.animation2);
         }
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
