@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_frame"
-    android:padding="16dp"
-    tools:context="com.dictionary.viru.fragments.SettingFragment">
+    android:padding="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

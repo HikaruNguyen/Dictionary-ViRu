@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.dictionary.viru.fragments.HomeFragment">
+    android:orientation="vertical">
 
     <RelativeLayout
-        style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -19,7 +17,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_5dp">
 
-            <com.dictionary.viru.widget.customeControl.CustomEditText
+            <dictionary.viet.russia.viru.widget.customeControl.CustomEditText
                 android:id="@+id/edSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

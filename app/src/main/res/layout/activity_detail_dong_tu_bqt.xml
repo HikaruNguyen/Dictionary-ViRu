@@ -8,7 +8,7 @@
     android:layoutDirection="ltr"
     android:textDirection="ltr"
     android:fitsSystemWindows="true"
-    tools:context="com.dictionary.viru.activity.DetailDongTuBQTActivity">
+    tools:context=".activity.DetailDongTuBQTActivity">
 
     <include
         android:id="@+id/tool_bar"
@@ -263,7 +263,7 @@
                 <!--android:layout_height="match_parent"-->
                 <!--android:padding="10dp"-->
                 <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-                <com.dictionary.viru.widget.customeControl.ExpandableHeightListView
+                <dictionary.viet.russia.viru.widget.customeControl.ExpandableHeightListView
                     android:id="@+id/rvListVerb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_5dp"
@@ -110,7 +109,7 @@
             </RelativeLayout>
 
 
-            <com.dictionary.viru.widget.customeControl.CustomeWebView
+            <dictionary.viet.russia.viru.widget.customeControl.CustomeWebView
                 android:id="@+id/webView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

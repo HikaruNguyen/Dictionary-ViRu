@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/window_icon">
 
-                <com.dictionary.viru.widget.customeControl.CustomAutoCompleteView
+               <dictionary.viet.russia.viru.widget.customeControl.CustomAutoCompleteView
                     android:id="@+id/searchView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                     android:background="@drawable/bg_frame_white_popup"
                     android:visibility="gone">
 
-                    <com.dictionary.viru.widget.customeControl.CustomEditText
+                    <dictionary.viet.russia.viru.widget.customeControl.CustomEditText
                         android:id="@+id/edSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

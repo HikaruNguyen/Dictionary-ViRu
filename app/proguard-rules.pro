@@ -44,9 +44,14 @@
 -keepclasseswithmembernames class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
-#-keepclassmembers class com.app.maththpt.widget.CustomeWebView {
+-keepclassmembers class dictionary.viet.russia.viru.widget.CustomEditText {
+   public *;
+}
+
+#-keepclassmembers class dictionary.viet.russia.viru.database.AssetDatabaseOpenHelper {
 #   public *;
 #}
+
 -keepclassmembers class * extends android.content.Context {
    public void *(android.view.View);
    public void *(android.view.MenuItem);
@@ -84,15 +89,6 @@
 
 -keep public class * extends android.support.v4.view.ActionProvider {
     public <init>(android.content.Context);
-}
-
-# Lambda expressions
- -keepclassmembers class * {
-     private static synthetic java.lang.Object $deserializeLambda$(java.lang.invoke.SerializedLambda);
-}
-
--keepclassmembernames class * {
-    private static synthetic *** lambda$*(...);
 }
 
 -adaptclassstrings com.example.Test
@@ -145,7 +141,6 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 
--dontwarn rx.**
 -dontwarn retrofit.**
 -dontwarn okio.**
 
@@ -182,36 +177,6 @@
 
 -dontwarn sun.misc.**
 
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-   long producerNode;
-   long consumerNode;
-}
-
-
-# ALSO REMEMBER KEEPING YOUR MODEL CLASSES
-#-keepclasseswithmembernames class com.app.maththpt.model.** { *; }
-#-keepclasseswithmembernames class com.app.maththpt.modelresult.** { *; }
-#-keep class com.app.maththpt.config.** { *; }
-
-# Proguard Configuration for Realm (http://realm.io)
-# For detailed discussion see: https://groups.google.com/forum/#!topic/realm-java/umqKCc50JGU
-# Additionally you need to keep your Realm Model classes as well
-# For example:
-# -keep class com.app.maththpt.realm.** { *; }
--keep class io.realm.annotations.RealmModule
--keep @io.realm.annotations.RealmModule class *
--keep class io.realm.internal.Keep
--keep @io.realm.internal.Keep class *
--dontwarn javax.**
--dontwarn io.realm.**
-
--keep class android.databinding.** { *; }
-
 -dontwarn javax.xml.stream.events.**
 
 -keepattributes *Annotation*
@@ -232,3 +197,8 @@
 -dontwarn android.support.**
 -dontwarn java.lang.invoke**
 -dontwarn com.google.android.gms.internal.**
+
+#-keepclasseswithmembernames class dictionary.viet.russia.viru.database.** { *; }
+#-keepclasseswithmembernames class dictionary.viet.russia.viru.model.** { *; }
+#-keepclasseswithmembernames class dictionary.viet.russia.viru.model.db.** { *; }
+#-keepclasseswithmembernames class dictionary.viet.russia.viru.model.resultApi.** { *; }
