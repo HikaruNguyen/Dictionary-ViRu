@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'dictionaryAndroid'
             keyPassword 'dictionaryManhnd'
-            storeFile file('D:/MyProject/Dict/Dictionary-ViRu/keystore.jks')
+            storeFile file("${project.rootDir}/keystore.jks")
             storePassword 'dictionaryManhnd'
         }
     }
