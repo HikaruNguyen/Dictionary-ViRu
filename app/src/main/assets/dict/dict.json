@@ -18,7 +18,7 @@
         "updated_at": 1467694430,
         "res_path": null,
         "name2": "Tu dien Viet Nga",
-        "url": "https://api.nextdict.com/dict/v2/vi_ru_universal.tar.gz",
+        "url": "",
         "isChecked": 1
       },
       {
@@ -36,13 +36,13 @@
         "updated_at": 1467694407,
         "res_path": null,
         "name2": "Tu dien Nga Viet",
-        "url": "https://api.nextdict.com/dict/v2/ru_vi_universal.tar.gz",
+        "url": "",
         "isChecked": 0
       }
     ],
     "_links": {
       "self": {
-        "href": "http://api.nextdict.com/index.php/dict/list?page=1"
+        "href": ""
       }
     },
     "_meta": {

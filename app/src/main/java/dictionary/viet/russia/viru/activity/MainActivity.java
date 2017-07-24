@@ -22,6 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import dictionary.viet.russia.viru.NextDictUtils.CLog;
@@ -31,6 +34,7 @@ import dictionary.viet.russia.viru.R;
 import dictionary.viet.russia.viru.configuration.Configruation;
 import dictionary.viet.russia.viru.configuration.IntentFilterConfig;
 import dictionary.viet.russia.viru.database.ManagerDictDatabase;
+import dictionary.viet.russia.viru.event.ChangeMenuEvent;
 import dictionary.viet.russia.viru.fragments.BaseFragment;
 import dictionary.viet.russia.viru.fragments.FavoriteFragment;
 import dictionary.viet.russia.viru.fragments.HistoryFragment;
@@ -383,5 +387,32 @@ public class MainActivity extends AppCompatActivity
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void onEvent(ChangeMenuEvent event) {
+        if (event.type == Configruation.HOME_SEARCH_WORD) {
+            fragment = new HomeFragment();
+            changeFragment(fragment);
+            mCurrentPage = Configruation.HOME_SEARCH_WORD;
+            if (event.isClickFloat) {
+                HomeFragment.edSearch.setText("");
+            }
+
+        }
+    }
 }
