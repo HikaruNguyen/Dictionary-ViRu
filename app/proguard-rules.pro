@@ -44,9 +44,6 @@
 -keepclasseswithmembernames class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
--keepclassmembers class dictionary.viet.russia.viru.widget.CustomEditText {
-   public *;
-}
 
 #-keepclassmembers class dictionary.viet.russia.viru.database.AssetDatabaseOpenHelper {
 #   public *;

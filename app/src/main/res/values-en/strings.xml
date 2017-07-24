@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Viet-Russia Russia-Viet Dictionary</string>
-    <string name="app_name_vi_ru">Viet-Russia Dictionary</string>
-    <string name="app_name_ru_vi">Russia-Viet Dictionary</string>
-    <string name="app_name_splash">Viet-Russia Russia-Viet\nDictionary</string>
+    <string name="app_name">Viet-Eng Eng-Viet Dictionary</string>
+    <string name="app_name_vi_ru">Viet-Eng Dictionary</string>
+    <string name="app_name_ru_vi">Eng-Viet Dictionary</string>
+    <string name="app_name_splash">Viet-Eng Eng-Viet\nDictionary</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_connect">No internet connection!</string>

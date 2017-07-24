@@ -13,11 +13,16 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     defaultConfig {
-        applicationId "dictionary.viet.russia.viru"
+        applicationId "dictionary.vietnamese.tudien.viet"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 1
+        versionName "1.0"
+    }
+    productFlavors {
+        vien{
+            applicationIdSuffix ".en"
+        }
     }
     buildTypes {
         release {

@@ -180,7 +180,7 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <dictionary.viet.russia.widget.customeControl.ExpandableHeightGridView
+        <dictionary.vietnamese.tudien.widget.customeControl.ExpandableHeightGridView
             android:id="@+id/gvInvitedFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

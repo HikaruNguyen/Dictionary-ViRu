@@ -263,7 +263,7 @@
                 <!--android:layout_height="match_parent"-->
                 <!--android:padding="10dp"-->
                 <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-                <dictionary.viet.russia.viru.widget.customeControl.ExpandableHeightListView
+                <dictionary.vietnamese.tudien.viet.widget.customeControl.ExpandableHeightListView
                     android:id="@+id/rvListVerb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

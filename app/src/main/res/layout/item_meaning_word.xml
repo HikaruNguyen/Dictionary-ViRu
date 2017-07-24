@@ -109,7 +109,7 @@
             </RelativeLayout>
 
 
-            <dictionary.viet.russia.viru.widget.customeControl.CustomeWebView
+            <dictionary.vietnamese.tudien.viet.widget.customeControl.CustomeWebView
                 android:id="@+id/webView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

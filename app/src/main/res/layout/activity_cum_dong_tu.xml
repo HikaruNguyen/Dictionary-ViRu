@@ -35,7 +35,7 @@
                 android:background="@drawable/bg_frame_search"
                 android:padding="5dp">
 
-                <dictionary.viet.russia.viru.widget.customeControl.CustomEditText
+                <dictionary.vietnamese.tudien.viet.widget.customeControl.CustomEditText
                     android:id="@+id/edSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dictionary.viet.russia.viru">
+    package="dictionary.vietnamese.tudien.viet">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="com.sony.smallapp.permission.SMALLAPP" />
 
     <application
-        android:name=".activity.MyApplication"
+        android:name="dictionary.vietnamese.tudien.viet.activity.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -38,7 +38,7 @@
 
 
         <activity
-            android:name=".activity.MeaningWordActivity"
+            android:name="dictionary.vietnamese.tudien.viet.activity.MeaningWordActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -71,15 +71,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.PopupLauncherActivity"
+            android:name="dictionary.vietnamese.tudien.viet.activity.PopupLauncherActivity"
             android:label="@string/title_activity_popup_launcher"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.ChatHeadService"
+            android:name="dictionary.vietnamese.tudien.viet.service.ChatHeadService"
             android:windowSoftInputMode="stateAlwaysVisible" />
         <service
-            android:name=".service.standOut.MultiWindow"
+            android:name="dictionary.vietnamese.tudien.viet.service.standOut.MultiWindow"
             android:windowSoftInputMode="stateAlwaysVisible">
             <meta-data
                 android:name="android.app.searchable"
@@ -89,18 +89,18 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </service>
-        <service android:name=".service.standOut.SimpleWindow" />
-        <service android:name=".service.standOut.MostBasicWindow" />
-        <service android:name=".service.standOut.WidgetsWindow" />
+        <service android:name="dictionary.vietnamese.tudien.viet.service.standOut.SimpleWindow" />
+        <service android:name="dictionary.vietnamese.tudien.viet.service.standOut.MostBasicWindow" />
+        <service android:name="dictionary.vietnamese.tudien.viet.service.standOut.WidgetsWindow" />
         <!-- <activity android:name=".activities.SmallApp"> -->
 
 
         <!-- </activity> -->
         <!-- <service android:name="com.nextdict.appandroid.activities.SmallApp" -->
         <!-- android:exported="true"/> -->
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.SettingAppCompatActivity" />
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name="dictionary.vietnamese.tudien.viet.activity.SettingActivity" />
+        <activity android:name="dictionary.vietnamese.tudien.viet.activity.SettingAppCompatActivity" />
+        <activity android:name="dictionary.vietnamese.tudien.viet.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -109,20 +109,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.BatQuyTacActivity"
+            android:name="dictionary.vietnamese.tudien.viet.activity.BatQuyTacActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.CumDongTuActivity"
+            android:name="dictionary.vietnamese.tudien.viet.activity.CumDongTuActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.DetailSentencesActivity" />
-        <activity android:name=".activity.DetailDongTuBQTActivity" />
+        <activity android:name="dictionary.vietnamese.tudien.viet.activity.DetailSentencesActivity" />
+        <activity android:name="dictionary.vietnamese.tudien.viet.activity.DetailDongTuBQTActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="673927fe4a62995cbd4dfe468cd9faac61c54175" />
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="dictionary.vietnamese.tudien.viet.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
