@@ -38,7 +38,7 @@
     <string name="no">No</string>
     <string name="accept">Accept</string>
     <string name="confirmDelFavorite">Clear favorite words?</string>
-    <string name="extracting">Extracting...</string>
+    <string name="extracting">Extracting…</string>
     <string name="title_activity_fap">FapActivity</string>
     <string name="zoomout">Zoom out</string>
     <string name="hide">Hide</string>
@@ -57,7 +57,7 @@
     <string name="huge">Bigger</string>
     <string name="popupOpening">Popup window</string>
     <string name="tapClose">Tap to close</string>
-    <string name="downloadFilePleaseWait">Downloading...</string>
+    <string name="downloadFilePleaseWait">Downloading…</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

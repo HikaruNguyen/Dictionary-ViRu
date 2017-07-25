@@ -41,7 +41,7 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageButton
                         android:id="@+id/img_speechUK"
@@ -77,7 +77,7 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageButton
                         android:id="@+id/img_speechUS"
@@ -101,7 +101,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_size_small"
                         android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
 
                 </LinearLayout>

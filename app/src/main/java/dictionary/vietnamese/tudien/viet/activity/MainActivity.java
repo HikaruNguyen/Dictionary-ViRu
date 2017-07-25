@@ -22,6 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import dictionary.vietnamese.tudien.viet.NextDictUtils.CLog;
@@ -31,6 +34,7 @@ import dictionary.vietnamese.tudien.viet.R;
 import dictionary.vietnamese.tudien.viet.configuration.Configruation;
 import dictionary.vietnamese.tudien.viet.configuration.IntentFilterConfig;
 import dictionary.vietnamese.tudien.viet.database.ManagerDictDatabase;
+import dictionary.vietnamese.tudien.viet.event.ChangeMenuEvent;
 import dictionary.vietnamese.tudien.viet.fragments.BaseFragment;
 import dictionary.vietnamese.tudien.viet.fragments.FavoriteFragment;
 import dictionary.vietnamese.tudien.viet.fragments.HistoryFragment;
@@ -383,5 +387,33 @@ public class MainActivity extends AppCompatActivity
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void onEvent(ChangeMenuEvent event) {
+        if (event.type == Configruation.HOME_SEARCH_WORD) {
+            fragment = new HomeFragment();
+            changeFragment(fragment);
+            mCurrentPage = Configruation.HOME_SEARCH_WORD;
+            if (event.isClickFloat) {
+                HomeFragment.edSearch.setText("");
+            }
+
+        }
+    }
 
 }

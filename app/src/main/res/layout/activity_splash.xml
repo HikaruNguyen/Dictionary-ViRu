@@ -22,7 +22,7 @@
             android:layout_width="@dimen/image_size_100dp"
             android:layout_height="@dimen/image_size_100dp"
             android:gravity="center_horizontal"
-            android:src="@mipmap/logo_512"
+            android:src="@mipmap/logo_envi"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_50sp"
             android:textStyle="bold" />
