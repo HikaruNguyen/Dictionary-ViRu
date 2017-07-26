@@ -1,7 +1,6 @@
 package dictionary.vietnamese.tudien.viet.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
@@ -59,11 +58,11 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
-                        holder.img_speechUK.setColorFilter(Color.TRANSPARENT);
+                        holder.img_speechUK.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        holder.img_speechUK.setColorFilter(Color.TRANSPARENT);
+                        holder.img_speechUK.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
                         EventBus.getDefault().post(new ClickVoiceEvent(Locale.UK, list.get(position).dictWord.getWord(),type));
                         break;
                 }
@@ -79,11 +78,11 @@ public class MeaningAdapter extends BaseRecyclerAdapter<DictWordObject, MeaningA
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
-                        holder.img_speechUS.setColorFilter(Color.TRANSPARENT);
+                        holder.img_speechUS.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        holder.img_speechUS.setColorFilter(Color.TRANSPARENT);
+                        holder.img_speechUS.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
                         EventBus.getDefault().post(new ClickVoiceEvent(Locale.US, list.get(position).dictWord.getWord(),type));
                         break;
                 }

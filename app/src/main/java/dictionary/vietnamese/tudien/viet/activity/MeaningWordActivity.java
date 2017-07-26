@@ -2,7 +2,6 @@ package dictionary.vietnamese.tudien.viet.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -20,7 +19,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import dictionary.vietnamese.tudien.viet.NextDictUtils.AESUtils;
 import dictionary.vietnamese.tudien.viet.NextDictUtils.CLog;
@@ -62,8 +60,6 @@ public class MeaningWordActivity extends BaseActivity {
     private LinearLayout lnUK, lnUS;
     private CustomeWebView webView;
     private TextView tvWord;
-    private TextToSpeech textToSpeechUK;
-    private TextToSpeech textToSpeechUS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,12 +102,12 @@ public class MeaningWordActivity extends BaseActivity {
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
-                        img_speechUK.setColorFilter(Color.TRANSPARENT);
+                        img_speechUK.setColorFilter(getResources().getColor(R.color.colorPrimary));
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        img_speechUK.setColorFilter(Color.TRANSPARENT);
-                        textToSpeechUK.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                        img_speechUK.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                        MyApplication.with(MeaningWordActivity.this).getTextToSpeechUK().speak(word, TextToSpeech.QUEUE_FLUSH, null);
                         break;
                 }
                 return true;
@@ -126,12 +122,12 @@ public class MeaningWordActivity extends BaseActivity {
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
-                        img_speechUS.setColorFilter(Color.TRANSPARENT);
+                        img_speechUS.setColorFilter(getResources().getColor(R.color.colorPrimary));
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        img_speechUS.setColorFilter(Color.TRANSPARENT);
-                        textToSpeechUS.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                        img_speechUS.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                        MyApplication.with(MeaningWordActivity.this).getTextToSpeechUS().speak(word, TextToSpeech.QUEUE_FLUSH, null);
                         break;
                 }
                 return true;
@@ -140,7 +136,7 @@ public class MeaningWordActivity extends BaseActivity {
     }
 
     private void InitData() {
-        initVoice();
+
         managerDictDatabase = new ManagerDictDatabase(activity);
         historyDatabase = new HistoryDatabase(activity);
         favoriteDatabase = new FavoriteDatabase(activity);
@@ -215,55 +211,6 @@ public class MeaningWordActivity extends BaseActivity {
         }
     }
 
-    private void initVoice() {
-        try {
-            textToSpeechUK = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-//                    if (status != TextToSpeech.ERROR) {
-//                        textToSpeechUK.setLanguage(Locale.UK);
-//                        textToSpeechUK.setPitch(1.3f);
-//                        textToSpeechUK.setSpeechRate(1f);
-//                    }
-                    if (status == TextToSpeech.SUCCESS) {
-                        int result = textToSpeechUK.setLanguage(Locale.UK);
-                        if (result == TextToSpeech.LANG_MISSING_DATA ||
-                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                            CLog.e("error", "This Language is not supported");
-                        } else {
-                            textToSpeechUK.setPitch(1.3f);
-                            textToSpeechUK.setSpeechRate(1f);
-                        }
-                    } else
-                        CLog.e(TAG, "Initilization UK Failed!");
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            textToSpeechUS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-                    if (status == TextToSpeech.SUCCESS) {
-                        int result = textToSpeechUS.setLanguage(Locale.US);
-                        if (result == TextToSpeech.LANG_MISSING_DATA ||
-                                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                            CLog.e("error", "This Language is not supported");
-                        } else {
-                            textToSpeechUS.setPitch(1.0f);
-                            textToSpeechUS.setSpeechRate(1f);
-                        }
-                    } else
-                        CLog.e(TAG, "Initilization US Failed!");
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void InitUI() {
         EventBus.getDefault().post(new HideShowKeyBoardEvent(HideShowKeyBoardEvent.TYPE_HIDE));

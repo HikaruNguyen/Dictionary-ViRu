@@ -51,7 +51,8 @@
                         android:layout_toLeftOf="@+id/txtUK"
                         android:background="@null"
                         android:clickable="false"
-                        android:src="@mipmap/ic_volume" />
+                        android:src="@mipmap/ic_volume"
+                        android:tint="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/txtUK"
@@ -87,7 +88,8 @@
                         android:layout_toLeftOf="@+id/txtUS"
                         android:background="@null"
                         android:clickable="false"
-                        android:src="@mipmap/ic_volume" />
+                        android:src="@mipmap/ic_volume"
+                        android:tint="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/txtUS"
