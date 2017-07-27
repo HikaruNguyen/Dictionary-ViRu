@@ -1,7 +1,5 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 /.idea/
 .DS_Store
 /build
@@ -10,3 +8,9 @@ Dictionary-ViRu.iml
 NEXDICT_OFFLINE.iml
 NextDict.iml
 app/app.iml
+AppSign.jks
+AppSigning.txt
+app/app-vien-release.apk
+private_key.pem
+upload_key_public_certificate.pem
+app-vien-release.apk
